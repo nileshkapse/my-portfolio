@@ -1,0 +1,91 @@
+.experience {
+  padding: 40px;
+  background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+  color: white;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.experience-card {
+  background: #2a2a2a;
+  padding: 20px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  text-align: left;
+  animation: fadeInUp 1s ease-in-out;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  width: 80%;
+  position: relative;
+}
+
+.company-logo {
+  width: 130px;
+  height: auto;
+  display: block;
+}
+
+.experience-location,
+.experience-total {
+  font-size: 1rem;
+  color: #ffcc00;
+  margin: 5px 0;
+}
+
+.position-card {
+  background: #333;
+  padding: 12px;
+  border-radius: 8px;
+  margin-top: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.position-card h4 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+  color: #ff8a00;
+}
+
+.experience-display-duration {
+  font-style: italic;
+  font-size: 1rem;
+  color: #ffcc00;
+  margin-bottom: 8px;
+}
+
+.position-card ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.position-card li {
+  display: flex;
+  align-items: center;
+  background: #444;
+  padding: 8px;
+  border-radius: 6px;
+  margin: 4px 0;
+  transition: background 0.3s ease-in-out;
+  color: white;
+}
+
+.position-card li:hover {
+  background: #555555;
+}
+
+.bullet-icon {
+  margin-right: 8px;
+  color: #ffcc00;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

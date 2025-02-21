@@ -1,0 +1,22 @@
+.hero {
+    text-align: center;
+    padding: 50px;
+    background: linear-gradient(135deg, #ff8a00, #e52e71);
+    color: white;
+    animation: fadeIn 1.5s ease-in-out;
+  }
+  
+  .hero-title {
+    font-size: 3rem;
+    font-weight: bold;
+  }
+  
+  .hero-subtitle {
+    font-size: 1.5rem;
+    margin-top: 10px;
+  }
+  
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }

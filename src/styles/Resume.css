@@ -1,0 +1,32 @@
+.resume-section {
+    padding: 60px;
+    text-align: center;
+    background: #1e1e1e;
+    color: white;
+  }
+  
+  .resume-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .view-btn, .download-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: #ff8a00;
+    color: white;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .view-btn:hover, .download-btn:hover {
+    background: #e67300;
+  }
+  
