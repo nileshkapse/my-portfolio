@@ -15,6 +15,10 @@ import {
   FaWindowMinimize,
 } from "react-icons/fa";
 import ResumeForm from "./Component/ResumeForm";
+import { Route, Router, Routes, useParams } from "react-router-dom";
+import Login from "./Component/Login";
+import Signup from "./Component/Singup";
+import ProtectedRoute from "./Component/ProtectedRoute";
 
 function App() {
   const [showScroll, setShowScroll] = useState(false);
@@ -127,120 +131,184 @@ function App() {
     }, 1000);
   };
 
+  const { username } = useParams(); // Get username from URL
+  const [userData, setUserData] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (username) {
+      fetchUserData(username);
+    }
+  }, [username]);
+
+  const fetchUserData = async (username) => {
+    setLoading(true);
+    try {
+      const response = await fetch(`http://localhost:5000/user/${username}`);
+      const data = await response.json();
+      setUserData(data);
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+    setLoading(false);
+  };
+
   return (
-    <div className="app-container">
-      {showCelebration && (
-        <div className="celebration-effect">
-          {confetti.map((piece) => (
-            <div
-              key={piece.id}
-              className="confetti-piece"
-              style={{
-                top: piece.top,
-                left: piece.left,
-                animationDelay: piece.animationDelay,
-              }}
-            />
-          ))}
-        </div>
-      )}
-      {showZomatoAnimation && (
-        <div className="zomato-animation">
-          {zomatoLogos.map((logo) => (
-            <img
-              key={logo.id}
-              src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Zomato_logo.png/600px-Zomato_logo.png"
-              alt="Zomato Logo"
-              className="zomato-logo firework-logo"
-              style={{
-                top: logo.top,
-                left: logo.left,
-                animationDelay: logo.animationDelay,
-              }}
-            />
-          ))}
-          <img
-            src="https://image.pngaaa.com/325/8364325-middle.png"
-            alt="Food Delivery"
-            className="food-delivery moving-bike"
-          />
-        </div>
-      )}
-      <Header />
-      <Hero />
-      <About />
-      <Skills />
-      <Experience />
-      <Projects />
-      <Resume />
-      <ResumeForm />
-      <Contact />
-      {showScroll && (
-        <button className="scroll-to-top" onClick={scrollToTop}>
-          <FaArrowUp />
-        </button>
-      )}
-      <button
-        className="chatbot-toggle"
-        onClick={() => setShowChatbot(!showChatbot)}
-      >
-        <FaRobot />
-      </button>
-      {showChatbot && (
-        <div className="chatbot-container">
-          <div className="chatbot-header">
-            Chatbot Assistant
-            <div className="chatbot-header-icon">
-              <FaWindowMinimize onClick={() => setShowChatbot(!showChatbot)} />{" "}
-              <FaWindowClose
-                onClick={() => {
-                  setMessages([
-                    {
-                      text: "Hello! How can I assist you regarding my portfolio?",
-                      sender: "bot",
-                    },
-                  ]);
-                  setInput("");
-                  setShowChatbot(!showChatbot);
-                }}
-              />
-            </div>
-          </div>
-          <div className="chatbot-default-queries">
-            {defaultQueries.map((query, index) => (
+    <Routes>
+      {/* <Route path="/" element={<Login />} />
+      <Route path="/signup" element={<Signup />} /> */}
+
+      {/* Protected Routes */}
+      {/* <Route element={<ProtectedRoute />}> */}
+      <Route
+        path="/"
+        element={
+          <>
+            <Header />
+            {loading ? (
+              <p>Loading user data...</p>
+            ) : userData ? (
+              <>
+                <Hero summary={userData.summary} />
+                <About about={userData.about} />
+                <Skills skills={userData.skills} />
+                <Experience experience={userData.experience} />
+                <Projects projects={userData.projects} />
+                <Resume resumeUrl={userData.resumeUrl} />
+                <ResumeForm />
+                <Contact />
+              </>
+            ) : (
+              <p>User not found</p>
+            )}
+          </>
+        }
+      />
+
+      <Route
+        path="/dashboard"
+        element={
+          <>
+            <div className="app-container">
+              {showCelebration && (
+                <div className="celebration-effect">
+                  {confetti.map((piece) => (
+                    <div
+                      key={piece.id}
+                      className="confetti-piece"
+                      style={{
+                        top: piece.top,
+                        left: piece.left,
+                        animationDelay: piece.animationDelay,
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
+              {showZomatoAnimation && (
+                <div className="zomato-animation">
+                  {zomatoLogos.map((logo) => (
+                    <img
+                      key={logo.id}
+                      src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Zomato_logo.png/600px-Zomato_logo.png"
+                      alt="Zomato Logo"
+                      className="zomato-logo firework-logo"
+                      style={{
+                        top: logo.top,
+                        left: logo.left,
+                        animationDelay: logo.animationDelay,
+                      }}
+                    />
+                  ))}
+                  <img
+                    src="https://image.pngaaa.com/325/8364325-middle.png"
+                    alt="Food Delivery"
+                    className="food-delivery moving-bike"
+                  />
+                </div>
+              )}
+              <Header />
+              <Hero />
+              <About />
+              <Skills />
+              <Experience />
+              <Projects />
+              <Resume />
+              <ResumeForm />
+              <Contact />
+              {showScroll && (
+                <button className="scroll-to-top" onClick={scrollToTop}>
+                  <FaArrowUp />
+                </button>
+              )}
               <button
-                key={index}
-                className="query-btn"
-                onClick={() => handleSendMessage(query)}
+                className="chatbot-toggle"
+                onClick={() => setShowChatbot(!showChatbot)}
               >
-                {query}
+                <FaRobot />
               </button>
-            ))}
-          </div>
-          <div className="chatbot-messages">
-            {messages.map((msg, index) => (
-              <div
-                key={index}
-                className={
-                  msg.sender === "bot" ? "bot-message" : "user-message"
-                }
-              >
-                {msg.text}
-              </div>
-            ))}
-          </div>
-          <div className="chatbot-input">
-            <input
-              type="text"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
-              placeholder="Ask something..."
-            />
-            <button onClick={() => handleSendMessage()}>Send</button>
-          </div>
-        </div>
-      )}
-    </div>
+              {showChatbot && (
+                <div className="chatbot-container">
+                  <div className="chatbot-header">
+                    Chatbot Assistant
+                    <div className="chatbot-header-icon">
+                      <FaWindowMinimize
+                        onClick={() => setShowChatbot(!showChatbot)}
+                      />{" "}
+                      <FaWindowClose
+                        onClick={() => {
+                          setMessages([
+                            {
+                              text: "Hello! How can I assist you regarding my portfolio?",
+                              sender: "bot",
+                            },
+                          ]);
+                          setInput("");
+                          setShowChatbot(!showChatbot);
+                        }}
+                      />
+                    </div>
+                  </div>
+                  <div className="chatbot-default-queries">
+                    {defaultQueries.map((query, index) => (
+                      <button
+                        key={index}
+                        className="query-btn"
+                        onClick={() => handleSendMessage(query)}
+                      >
+                        {query}
+                      </button>
+                    ))}
+                  </div>
+                  <div className="chatbot-messages">
+                    {messages.map((msg, index) => (
+                      <div
+                        key={index}
+                        className={
+                          msg.sender === "bot" ? "bot-message" : "user-message"
+                        }
+                      >
+                        {msg.text}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="chatbot-input">
+                    <input
+                      type="text"
+                      value={input}
+                      onChange={(e) => setInput(e.target.value)}
+                      placeholder="Ask something..."
+                    />
+                    <button onClick={() => handleSendMessage()}>Send</button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </>
+        }
+      />
+      {/* </Route> */}
+    </Routes>
   );
 }
 
