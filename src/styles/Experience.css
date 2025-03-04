@@ -21,7 +21,7 @@
 }
 
 .company-logo {
-  width: 130px;
+  width: 40px;
   height: auto;
   display: block;
 }
@@ -77,6 +77,25 @@
 .bullet-icon {
   margin-right: 8px;
   color: #ffcc00;
+}
+
+.description-list {
+  list-style: none; /* Remove default bullets */
+  padding-left: 0;
+}
+
+.description-item {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  margin-bottom: 5px; /* Ensure spacing between points */
+}
+
+.bullet-icon {
+  flex-shrink: 0; /* Prevent icon from resizing */
+  width: 14px; /* Set fixed width */
+  height: 14px; /* Set fixed height */
+  color: #4caf50; /* Set desired color */
 }
 
 @keyframes fadeInUp {

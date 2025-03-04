@@ -5,7 +5,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
+  padding: 14px;
   background: linear-gradient(90deg, #ff8a00, #e52e71);
   animation: slideIn 1s ease-in-out;
   /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
@@ -26,6 +26,7 @@
 
 .nav-links {
   display: flex;
+  align-items: center;
 }
 
 .nav-links a {

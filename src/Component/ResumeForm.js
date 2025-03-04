@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "../styles/ResumeForm.css";
 import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import Header from "./Header";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const indianDegrees = [
   "Bachelor of Engineering (B.E.)",
@@ -18,6 +20,10 @@ const indianDegrees = [
 ];
 
 const ResumeForm = () => {
+  const location = useLocation();
+  const userData = location.state?.user || {}; 
+
+  const [user, setUser] = useState(userData);
   const [resumeData, setResumeData] = useState(null);
   const [file, setFile] = useState(null);
   const [username, setUsername] = useState("");
@@ -36,6 +42,8 @@ const ResumeForm = () => {
     profile: false,
   });
 
+  const navigate = useNavigate();
+
   const toggleSection = (section) => {
     setShowSections({ ...showSections, [section]: !showSections[section] });
   };
@@ -49,6 +57,7 @@ const ResumeForm = () => {
   const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("username",userData.username)
     formData.append("resume", file);
 
     try {
@@ -127,7 +136,7 @@ const ResumeForm = () => {
       ...resumeData,
       projects: [
         ...resumeData.projects,
-        { name: "", description: [], technologies: [] },
+        { name: "",shortDescription:"", description: [], technologies: [] },
       ],
     });
   };
@@ -220,6 +229,7 @@ const ResumeForm = () => {
 
   return (
     <>
+      <Header />
       {showPopup && (
         <div className="resume-popup-overlay">
           <div className="resume-popup-content">
@@ -227,7 +237,10 @@ const ResumeForm = () => {
               <h2>Upload & Edit Resume</h2>
               <button
                 className="resume-close-btn"
-                onClick={() => setShowPopup(false)}
+                onClick={() => {
+                  setShowPopup(false);
+                  navigate("/dashboard");
+                }}
               >
                 ✖
               </button>
@@ -434,10 +447,26 @@ const ResumeForm = () => {
                           : "";
 
                         // Handle "Present" as empty value for endDate
-                        let formattedEndDate =
-                          exp.endDate.toLowerCase() === "present"
-                            ? new Date().toISOString().split("T")[0]
-                            : new Date(exp.endDate).toISOString().split("T")[0];
+                        let formattedEndDate;
+
+                        if (!exp.endDate || exp.endDate.trim() === "") {
+                          console.error("Invalid endDate:", exp.endDate);
+                          formattedEndDate = ""; // or some default value
+                        } else if (exp.endDate.toLowerCase() === "present") {
+                          formattedEndDate = new Date()
+                            .toISOString()
+                            .split("T")[0];
+                        } else {
+                          const parsedDate = new Date(exp.endDate);
+                          if (isNaN(parsedDate.getTime())) {
+                            console.error("Invalid date format:", exp.endDate);
+                            formattedEndDate = ""; // or handle it appropriately
+                          } else {
+                            formattedEndDate = parsedDate
+                              .toISOString()
+                              .split("T")[0];
+                          }
+                        }
 
                         return (
                           <div key={index} className="resume-experience-card">
@@ -704,10 +733,15 @@ const ResumeForm = () => {
                           >
                             🗑
                           </button>
-                          <label>Project Name:</label>
+                          <label>Project Name :</label>
                           <input
                             className="resume-input"
                             value={project.name}
+                          />
+                          <label>Short Description :</label>
+                          <input
+                            className="resume-input"
+                            value={project.shortDescription}
                           />
                           <label>Description:</label>
                           <textarea

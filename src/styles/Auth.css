@@ -1,86 +1,121 @@
-/* General Auth Container */
+/* Gradient Background */
 .auth-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: linear-gradient(135deg, #007bff, #00c6ff);
-  }
-  
-  /* Auth Box */
-  .auth-box {
-    background: white;
-    padding: 2rem;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 400px;
-    text-align: center;
-    transition: transform 0.3s ease-in-out;
-  }
-  
-  .auth-box:hover {
-    transform: scale(1.02);
-  }
-  
-  /* Headings */
-  .auth-box h2 {
-    color: #333;
-    margin-bottom: 1rem;
-    font-size: 24px;
-  }
-  
-  /* Input Fields */
-  .auth-input {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-    font-size: 16px;
-    transition: border 0.3s ease-in-out;
-  }
-  
-  .auth-input:focus {
-    border-color: #007bff;
-    outline: none;
-  }
-  
-  /* Buttons */
-  .auth-button {
-    width: 100%;
-    padding: 12px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 16px;
-    background: linear-gradient(45deg, #007bff, #00c6ff);
-    color: white;
-    transition: background 0.3s ease-in-out;
-  }
-  
-  .auth-button:hover {
-    background: linear-gradient(45deg, #0056b3, #0095d9);
-  }
-  
-  /* Links */
-  .auth-link {
-    display: block;
-    margin-top: 15px;
-    color: #007bff;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  
-  .auth-link:hover {
-    text-decoration: underline;
-  }
-  
-  /* Responsive */
-  @media (max-width: 480px) {
-    .auth-box {
-      width: 90%;
-    }
-  }
-  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+}
+
+/* Auth Box */
+.auth-box {
+  background: linear-gradient(135deg, #222, #444);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 320px;
+  color: white;
+  transition: transform 0.2s;
+}
+
+/* Shake Animation */
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+/* Input Fields */
+.auth-input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.auth-input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.auth-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid #ff8a00;
+}
+
+/* Submit Button */
+.auth-button {
+  width: 50%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.auth-button:hover {
+  background: linear-gradient(135deg, #e52e71, #ff8a00);
+  transform: scale(1.05);
+}
+
+/* Error Message */
+.error-message {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: rgba(255, 0, 0, 0.1);
+  padding: 8px;
+  border-radius: 6px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Success Message */
+.success-message {
+  color: #4caf50;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: rgba(0, 255, 0, 0.1);
+  padding: 8px;
+  border-radius: 6px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Signup/Login Text */
+.signup-text {
+  margin-top: 12px;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Signup/Login Link */
+.signup-link {
+  color: #ff8a00;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+  color: #e52e71;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}

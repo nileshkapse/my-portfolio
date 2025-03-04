@@ -8,11 +8,10 @@ import {
   FaPaperPlane,
   FaLinkedin,
   FaGithub,
-  
 } from "react-icons/fa";
 import emailjs from "@emailjs/browser";
 
-function Contact() {
+function Contact(props) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -27,29 +26,30 @@ function Contact() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
 
-    emailjs
-      .send(
-        "service_yz2lgll", // Replace with your EmailJS Service ID
-        "template_0vhi8hm", // Replace with your EmailJS Template ID
-        {
-          from_name: formData.name,
-          from_email: formData.email,
-          phone: formData.phone,
-          message: formData.message,
-        },
-        "_CgICdkLfamIrpPyI" // Replace with your EmailJS Public Key
-      )
-      .then(
-        (response) => {
-          console.log("SUCCESS!", response.status, response.text);
-          setSubmitted(true);
-          setTimeout(() => setSubmitted(false), 3000);
-        },
-        (error) => {
-          console.error("FAILED...", error);
-        }
-      );
+    // emailjs
+    //   .send(
+    //     "service_yz2lgll", // Replace with your EmailJS Service ID
+    //     "template_0vhi8hm", // Replace with your EmailJS Template ID
+    //     {
+    //       from_name: formData.name,
+    //       from_email: formData.email,
+    //       phone: formData.phone,
+    //       message: formData.message,
+    //     },
+    //     "_CgICdkLfamIrpPyI" // Replace with your EmailJS Public Key
+    //   )
+    //   .then(
+    //     (response) => {
+    //       console.log("SUCCESS!", response.status, response.text);
+    //       setSubmitted(true);
+    //       setTimeout(() => setSubmitted(false), 3000);
+    //     },
+    //     (error) => {
+    //       console.error("FAILED...", error);
+    //     }
+    //   );
   };
 
   return (
@@ -63,29 +63,32 @@ function Contact() {
       <div className="contact-section">
         <div className="contact-details">
           <p>
-            <FaEnvelope /> kapsenileshp18@gmail.com
+            <FaEnvelope /> {props.userData.user_details.email}
           </p>
           <p>
-            <FaPhone /> +91 7620223325
+            <FaPhone /> {props.userData.user_details.phone}
           </p>
           <p>
             <FaLinkedin />{" "}
             <a
-              href="https://linkedin.com/in/nileshkapse"
+              href={props.userData.user_details.linkedin}
               target="_blank"
               rel="noopener noreferrer"
             >
-              linkedin.com/in/nileshkapse
+              {props.userData.user_details.linkedin.replace(
+                /(^\w+:|^)\/\//,
+                ""
+              )}
             </a>
           </p>
           <p>
             <FaGithub />{" "}
             <a
-              href="https://github.com/nileshkapse"
+              href={props.userData.user_details.github}
               target="_blank"
               rel="noopener noreferrer"
             >
-              github.com/nileshkapse
+              {props.userData.user_details.github.replace(/(^\w+:|^)\/\//, "")}
             </a>
           </p>
         </div>
