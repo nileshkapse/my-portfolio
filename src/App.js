@@ -39,7 +39,7 @@ function App() {
   const fetchUserData = async (username) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:5000/user/${username}`);
+      const response = await fetch(`process.env.REACT_APP_API_URL/user/${username}`);
       const data = await response.json();
       setUserData(data);
     } catch (error) {

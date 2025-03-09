@@ -61,7 +61,7 @@ const ResumeForm = () => {
     formData.append("resume", file);
 
     try {
-      const response = await fetch("http://localhost:5000/upload-resume", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/upload-resume`, {
         method: "POST",
         body: formData,
       });
@@ -92,7 +92,7 @@ const ResumeForm = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch("http://localhost:5000/save-resume", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/save-resume`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, ...resumeData }),
@@ -216,7 +216,7 @@ const ResumeForm = () => {
     if (value.length >= 3) {
       try {
         const response = await fetch(
-          `http://localhost:5000/check-username/${value}`
+          `${process.env.REACT_APP_API_URL}/check-username/${value}`
         );
         const data = await response.json();
         setAvailability(data.available);

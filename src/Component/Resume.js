@@ -8,7 +8,7 @@ function Resume(props) {
   const navigate = useNavigate();
 
   const downloadResume = async () => {
-    const resumeUrl = `http://localhost:5000${props.userData.user_details.resume}`;
+    const resumeUrl = `${process.env.REACT_APP_API_URL}${props.userData.user_details.resume}`;
     try {
       const response = await fetch(resumeUrl, { mode: "cors" });
       const blob = await response.blob();
@@ -33,7 +33,7 @@ function Resume(props) {
             if (props.userData.user_details.resume) {
               navigate("/resume-preview", {
                 state: {
-                  resumeUrl: `http://localhost:5000${props.userData.user_details.resume}`,
+                  resumeUrl: `${process.env.REACT_APP_API_URL}${props.userData.user_details.resume}`,
                 },
               });
             } else {

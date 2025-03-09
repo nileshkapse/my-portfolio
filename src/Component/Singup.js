@@ -4,7 +4,7 @@ import "../styles/Auth.css";
 
 const checkUsername = async (username) => {
   const response = await fetch(
-    `http://localhost:5000/check-username/${username}`
+    `${process.env.REACT_APP_API_URL}/check-username/${username}`
   );
   const data = await response.json();
   return data.available;
@@ -32,7 +32,7 @@ const Signup = () => {
 
     const userData = { ...user, username };
 
-    const response = await fetch("http://localhost:5000/signup", {
+    const response = await fetch(`${process.env.REACT_APP_API_URL}/signup`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

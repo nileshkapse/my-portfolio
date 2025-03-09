@@ -16,6 +16,7 @@ import Experience from "./Experience";
 import Resume from "./Resume";
 import Projects from "./Projects";
 import Contact from "./Contact";
+import Footer from "./Footer";
 
 const UserProfile = () => {
   const [showScroll, setShowScroll] = useState(false);
@@ -141,7 +142,7 @@ const UserProfile = () => {
     setLoading(true);
     try {
       console.log("Fetching data for:", username); // Debugging
-      const response = await fetch(`http://localhost:5000/user/${username}`);
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/user/${username}`);
       if (!response.ok) {
         throw new Error("User not found");
       }
@@ -273,6 +274,7 @@ const UserProfile = () => {
           </div>
         )}
       </div>
+      <Footer />
     </div>
   );
 };

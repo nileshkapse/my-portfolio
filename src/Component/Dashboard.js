@@ -11,6 +11,7 @@ import "../styles/Dashboard.css";
 import Header from "./Header";
 import { useAuth } from "../context/AuthContext";
 import ProfileSettings from "./ProfileSettings";
+import Footer from "./Footer";
 
 const Dashboard = () => {
   const { user, logout } = useAuth();
@@ -37,7 +38,7 @@ const Dashboard = () => {
       return;
     }
 
-    fetch("http://localhost:5000/user", {
+    fetch(`${process.env.REACT_APP_API_URL}/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
@@ -108,7 +109,7 @@ const Dashboard = () => {
                 if (userData.user.resume) {
                   navigate("/resume-preview", {
                     state: {
-                      resumeUrl: `http://localhost:5000${userData.user.resume}`,
+                      resumeUrl: `${process.env.REACT_APP_API_URL}${userData.user.resume}`,
                     },
                   });
                 } else {
@@ -133,6 +134,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 };
