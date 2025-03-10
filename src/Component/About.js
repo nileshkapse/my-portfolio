@@ -1,7 +1,7 @@
 import React from "react";
 import "../styles/About.css";
 
-function About() {
+function About(props) {
   return (
     <section id="about" className="about">
       <div className="about-container">
@@ -12,7 +12,7 @@ function About() {
         />
         <div className="about-content">
           <h2>About Me</h2>
-          <p className="about-description">
+          {/* <p className="about-description">
             <strong>Dynamic and results-driven</strong>{" "}
             <span className="highlight">Software Development Engineer</span>{" "}
             with
@@ -35,12 +35,31 @@ function About() {
               business growth and operational excellence
             </span>
             .
+          </p> */}
+          <p className="about-description">
+            {props.userData.user_details.summary}
           </p>
           <h3>Education</h3>
-          <p>
-            <strong>VIIT, Pune</strong> - B.Tech. in Computer Engineering |
-            CGPA: 9.63 (Aug 2020 - Jun 2023)
-          </p>
+          {props.userData.education.map((edu) => (
+            <p key={edu.id}>
+              <strong>
+                {edu.college}, {edu.location}
+              </strong>{" "}
+              - {edu.degree} | CGPA: {edu.cgpa} (
+              {edu.start_date
+                ? new Date(edu.start_date).toLocaleString("en-US", {
+                    month: "short",
+                    year: "numeric",
+                  })
+                : "Start"}{" "}
+              -{" "}
+              {new Date(edu.end_date).toLocaleString("en-US", {
+                month: "short",
+                year: "numeric",
+              })}
+              )
+            </p>
+          ))}
         </div>
       </div>
     </section>
