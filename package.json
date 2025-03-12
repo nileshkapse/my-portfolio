@@ -4,18 +4,15 @@
   "private": true,
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
-    "@testing-library/dom": "^10.4.0",
-    "@testing-library/jest-dom": "^6.6.3",
-    "@testing-library/react": "^16.2.0",
-    "@testing-library/user-event": "^13.5.0",
-    "ajv": "^8.17.1",
-    "ajv-keywords": "^5.1.0",
+    "cra-template-pwa": "2.0.0",
+    "framer-motion": "^12.4.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.2.0",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "tailwindcss": "^4.0.7",
+    "web-vitals": "^4.2.4"
   },
   "scripts": {
     "start": "react-scripts start",
