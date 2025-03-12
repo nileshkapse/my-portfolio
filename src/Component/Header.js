@@ -5,6 +5,7 @@ const Header = (props) => {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,48 +30,63 @@ const Header = (props) => {
 
   return (
     <header className={`header ${scrolled ? "scrolled" : ""}`}>
-      <div className="logo">Hi,ThisIsMyPortfolio</div>
-      <nav className="nav-links">
-        <a href="#about" className={activeSection === "about" ? "active" : ""}>
-          About
-        </a>
-        <a
-          href="#skills"
-          className={activeSection === "skills" ? "active" : ""}
-        >
-          Skills
-        </a>
-        <a
-          href="#experience"
-          className={activeSection === "experience" ? "active" : ""}
-        >
-          Experience
-        </a>
-        <a
-          href="#projects"
-          className={activeSection === "projects" ? "active" : ""}
-        >
-          Projects
-        </a>
-        <a
-          href="#contact"
-          className={activeSection === "contact" ? "active" : ""}
-        >
-          Contact
-        </a>
-        <a
-          href="#resume"
-          className={activeSection === "resume" ? "active" : ""}
-        >
-          Resume
-        </a>
+      <div className="logo">InstantPortfolio</div>
+
+      {/* Mobile Menu Button */}
+      <div
+        className="mobile-menu"
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+      >
+        ☰
+      </div>
+
+      <nav className={`nav-links ${mobileMenuOpen ? "show" : ""}`}>
+        {Object.keys(props).length <= 0 && (
+          <>
+            <a
+              href="#about"
+              className={activeSection === "about" ? "active" : ""}
+            >
+              About
+            </a>
+            <a
+              href="#skills"
+              className={activeSection === "skills" ? "active" : ""}
+            >
+              Skills
+            </a>
+            <a
+              href="#experience"
+              className={activeSection === "experience" ? "active" : ""}
+            >
+              Experience
+            </a>
+            <a
+              href="#projects"
+              className={activeSection === "projects" ? "active" : ""}
+            >
+              Projects
+            </a>
+            <a
+              href="#contact"
+              className={activeSection === "contact" ? "active" : ""}
+            >
+              Contact
+            </a>
+            <a
+              href="#resume"
+              className={activeSection === "resume" ? "active" : ""}
+            >
+              Resume
+            </a>
+          </>
+        )}
         {props.profile_link ? (
           <>
             <img
               src={props.profile_link || "https://via.placeholder.com/120"}
               alt="Profile"
-              style={{ width: "40px", height: "40px" }}
-              className="profile-settings-picture"
+              className="profile-picture"
               onClick={() => setShowPopup(!showPopup)}
             />
           </>
@@ -80,9 +96,7 @@ const Header = (props) => {
             <img
               src={props.profile_link || "https://via.placeholder.com/120"}
               alt="Profile"
-              style={{ width: "240px", height: "240px" }}
               className="profile-settings-picture"
-
             />
           </div>
         )}

@@ -357,3 +357,167 @@
   0% { transform: translateY(0) rotate(0deg); }
   100% { transform: translateY(100vh) rotate(360deg); }
 }
+
+@media screen and (max-width: 1024px) {
+  .skills-container {
+    width: 90%;
+  }
+
+  .skills-grid {
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+
+  .skill-card {
+    width: 100px;
+    padding: 10px;
+  }
+
+  .scroll-to-top {
+    bottom: 15px;
+    right: 30px;
+    padding: 10px;
+  }
+
+  .chatbot-toggle {
+    bottom: 15px;
+    right: 15px;
+    padding: 10px;
+  }
+
+  .chatbot-container {
+    width: 280px;
+    bottom: 100px;
+  }
+
+  .chatbot-messages {
+    height: 150px;
+  }
+
+  .popup-logo {
+    width: 50px;
+  }
+
+  .moving-bike {
+    width: 100px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .skills {
+    padding: 40px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .skills-container {
+    width: 95%;
+  }
+
+  .skills-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .skill-card {
+    width: 90%;
+    padding: 12px;
+  }
+
+  .soft-skill {
+    padding: 10px 14px;
+  }
+
+  .chatbot-container {
+    width: 90%;
+    bottom: 20px;
+    right: 5%;
+  }
+
+  .chatbot-messages {
+    height: 140px;
+  }
+
+  .chatbot-input input {
+    padding: 6px;
+  }
+
+  .chatbot-input button {
+    padding: 6px 10px;
+  }
+
+  .popup-logo {
+    width: 40px;
+  }
+
+  .moving-bike {
+    width: 80px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .skills {
+    padding: 30px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .skills-container {
+    width: 100%;
+  }
+
+  .skills-grid {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .skill-card {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .soft-skill {
+    font-size: 0.9rem;
+    padding: 8px 12px;
+  }
+
+  .chatbot-container {
+    width: 100%;
+    bottom: 10px;
+    right: 0;
+    border-radius: 0;
+  }
+
+  .chatbot-messages {
+    height: 120px;
+  }
+
+  .chatbot-input input {
+    font-size: 0.9rem;
+    padding: 6px;
+  }
+
+  .chatbot-input button {
+    padding: 5px 8px;
+  }
+
+  .popup-logo {
+    width: 35px;
+  }
+
+  .moving-bike {
+    width: 70px;
+  }
+
+  .scroll-to-top,
+  .chatbot-toggle {
+    bottom: 10px;
+    right: 10px;
+    padding: 8px;
+    font-size: 14px;
+  }
+}

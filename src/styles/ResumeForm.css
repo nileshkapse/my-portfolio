@@ -450,3 +450,124 @@
 .accordion-header :hover {
   background: #0056b3;
 }
+
+.upload-box {
+  width: 90%;
+  padding: 24px;
+  border: 3px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 35px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-box:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: white;
+}
+
+/* Upload Icon */
+.upload-icon {
+  color: #ff8a00;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.upload-box:hover .upload-icon {
+  transform: scale(1.1);
+}
+
+/* Upload Text */
+.upload-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Hide Default File Input */
+.resume-input {
+  display: none;
+}
+
+/* Upload Button */
+.upload-btn {
+  background: #ff8a00;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s ease;
+  width: 100%;
+  max-width: 200px;
+}
+
+.upload-btn:hover {
+  background: #e52e71;
+  transform: scale(1.05);
+}
+
+.upload-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+/* Resume Upload Container */
+.resume-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
+  color: white;
+  position: relative; /* Required for absolute positioning of the close button */
+}
+
+/* Error Message */
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* Close Button */
+.resume-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.resume-close-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.resume-close-btn:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}

@@ -75,7 +75,7 @@ const ProfileSettings = () => {
 
           <div className="profile-settings-group">
             <label>Profile Heading</label>
-            <textarea className="profile-settings-textarea" name="summary" value={user.profileheading || ""} onChange={handleChange} />
+            <textarea className="profile-settings-textarea" name="profileheading" value={user.profileheading || ""} onChange={handleChange} />
           </div>
 
           <div className="profile-settings-group">

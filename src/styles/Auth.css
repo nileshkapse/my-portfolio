@@ -119,3 +119,51 @@
   from { opacity: 0; transform: translateY(-10px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* Responsive Design for Mobile */
+@media (max-width: 480px) {
+  /* Adjust Auth Container for Mobile */
+  .auth-container {
+    height: 100vh;
+    padding: 10px;
+  }
+
+  /* Adjust Auth Box for Mobile */
+  .auth-box {
+    width: 90%;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Adjust Input Fields */
+  .auth-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Adjust Button for Mobile */
+  .auth-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Adjust Error/Success Messages */
+  .error-message, 
+  .success-message {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  /* Signup/Login Text */
+  .signup-text {
+    font-size: 14px;
+  }
+
+  /* Adjust Spacing for Better Mobile Experience */
+  .signup-link {
+    font-size: 14px;
+  }
+}

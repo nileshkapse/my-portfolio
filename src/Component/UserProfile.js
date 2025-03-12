@@ -217,7 +217,7 @@ const UserProfile = () => {
         >
           <FaRobot />
         </button>
-        {showChatbot && (
+        {showChatbot&& username==="nilesh_kapse" && (
           <div className="chatbot-container">
             <div className="chatbot-header">
               Chatbot Assistant

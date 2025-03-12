@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "../styles/ResumeForm.css";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaUpload } from "react-icons/fa";
 import Header from "./Header";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -21,7 +21,7 @@ const indianDegrees = [
 
 const ResumeForm = () => {
   const location = useLocation();
-  const userData = location.state?.user || {}; 
+  const userData = location.state?.user || {};
 
   const [user, setUser] = useState(userData);
   const [resumeData, setResumeData] = useState(null);
@@ -54,17 +54,39 @@ const ResumeForm = () => {
     setResumeData({ ...resumeData, [section]: updatedSection });
   };
 
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile) {
+      const allowedTypes = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
+      if (!allowedTypes.includes(selectedFile.type)) {
+        setErrorMessage("Only PDF, DOC, and DOCX files are allowed.");
+        setFile(null);
+      } else {
+        setErrorMessage("");
+        setFile(selectedFile);
+      }
+    }
+  };
+
   const handleUpload = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("username",userData.username)
+    formData.append("username", userData.username);
     formData.append("resume", file);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/upload-resume`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/upload-resume`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       const result = await response.json();
 
@@ -92,11 +114,14 @@ const ResumeForm = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/save-resume`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, ...resumeData }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/save-resume`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, ...resumeData }),
+        }
+      );
 
       const result = await response.json();
 
@@ -136,7 +161,7 @@ const ResumeForm = () => {
       ...resumeData,
       projects: [
         ...resumeData.projects,
-        { name: "",shortDescription:"", description: [], technologies: [] },
+        { name: "", shortDescription: "", description: [], technologies: [] },
       ],
     });
   };
@@ -232,35 +257,44 @@ const ResumeForm = () => {
       <Header />
       {showPopup && (
         <div className="resume-popup-overlay">
-          <div className="resume-popup-content">
-            <div className="resume-popup-header">
-              <h2>Upload & Edit Resume</h2>
-              <button
-                className="resume-close-btn"
-                onClick={() => {
-                  setShowPopup(false);
-                  navigate("/dashboard");
-                }}
-              >
-                ✖
-              </button>
-            </div>
+          <div className="resume-upload-container">
+            <button
+              className="resume-close-btn"
+              onClick={() => {
+                setShowPopup(false);
+                navigate("/dashboard");
+              }}
+            >
+              ✖
+            </button>
+            {/* Upload Box */}
+            <label className="upload-box">
+              <FaUpload size={40} className="upload-icon" />
+              <p className="upload-text">
+                {file ? file.name : "Click or Drag & Drop to Upload Resume"}
+              </p>
+              <input
+                type="file"
+                className="resume-input"
+                onChange={handleFileChange}
+              />
+            </label>
 
-            {!resumeData ? (
-              <div className="resume-upload">
-                <input
-                  type="file"
-                  className="resume-input"
-                  onChange={(e) => setFile(e.target.files[0])}
-                />
-                <button className="resume-btn" onClick={handleUpload}>
-                  Upload
-                </button>
-                {errorMessage && (
-                  <p className="error-message">{errorMessage}</p>
-                )}
-              </div>
-            ) : (
+            {/* Upload Button */}
+            <button
+              className="upload-btn"
+              onClick={() => file && handleUpload(file)}
+              disabled={!file}
+            >
+              Upload Resume
+            </button>
+
+            {/* Error Message */}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+          </div>
+
+          {resumeData && (
+            <div className="resume-popup-content">
               <div className="resume-form">
                 <div className="resume-form-section">
                   <label>Username:</label>
@@ -951,8 +985,8 @@ const ResumeForm = () => {
                   Save
                 </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
       )}
     </>

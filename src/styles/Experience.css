@@ -108,3 +108,60 @@
     transform: translateY(0);
   }
 }
+
+@media (max-width: 1024px) {
+  .experience {
+    padding: 30px;
+  }
+
+  .experience-card {
+    width: 90%;
+  }
+
+  .position-card h4 {
+    font-size: 1.1rem;
+  }
+
+  .experience-location,
+  .experience-total {
+    font-size: 0.95rem;
+  }
+
+  .position-card li {
+    padding: 6px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .experience {
+    padding: 20px;
+  }
+
+  .experience-card {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .position-card {
+    padding: 10px;
+  }
+
+  .position-card h4 {
+    font-size: 1rem;
+  }
+
+  .experience-location,
+  .experience-total {
+    font-size: 0.9rem;
+  }
+
+  .position-card li {
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+
+  .company-logo {
+    width: 35px;
+  }
+}

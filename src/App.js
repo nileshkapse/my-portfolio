@@ -15,7 +15,7 @@ import {
   FaWindowMinimize,
 } from "react-icons/fa";
 import ResumeForm from "./Component/ResumeForm";
-import { Route, Router, Routes, useParams } from "react-router-dom";
+import { Navigate, Route, Router, Routes, useParams } from "react-router-dom";
 import Login from "./Component/Login";
 import Signup from "./Component/Singup";
 import ProtectedRoute from "./Component/ProtectedRoute";
@@ -24,9 +24,12 @@ import ProfileSettings from "./Component/ProfileSettings";
 import MySkillAndResume from "./Component/MySkillAndResume";
 import ResumePreview from "./Component/ResumePreview";
 import UserProfile from "./Component/UserProfile";
+import { useAuth } from "./context/AuthContext";
+import MainPage from "./Component/MainPage";
 
 function App() {
   const { username } = useParams(); // Get username from URL
+  const { user } = useAuth(); // Check user authentication
   const [userData, setUserData] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -39,7 +42,9 @@ function App() {
   const fetchUserData = async (username) => {
     setLoading(true);
     try {
-      const response = await fetch(`process.env.REACT_APP_API_URL/user/${username}`);
+      const response = await fetch(
+        `process.env.REACT_APP_API_URL/user/${username}`
+      );
       const data = await response.json();
       setUserData(data);
     } catch (error) {
@@ -50,8 +55,18 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
+      <Route
+        path="/login"
+        element={user ? <Navigate to="/dashboard" /> : <Login />}
+      />
+      <Route
+        path="/signup"
+        element={user ? <Navigate to="/dashboard" /> : <Signup />}
+      />
+      <Route
+        path="/"
+        element={user ? <Navigate to="/dashboard" /> : <MainPage />}
+      />
       <Route path="/:username" element={<UserProfile />} />
 
       {/* Protected Routes */}

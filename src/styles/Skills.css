@@ -162,3 +162,214 @@
     transform: translateY(-5px);
   }
 }
+
+/* Default Styling (For Desktop) */
+.skills {
+  padding: 60px;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: white;
+  text-align: center;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.section-title {
+  font-size: 2rem;
+  margin-bottom: 30px;
+  color: #ff8a00;
+  text-transform: uppercase;
+  font-weight: bold;
+  display: inline-block;
+  padding-bottom: 5px;
+}
+
+.skills-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.skills-category {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.skills-category h3 {
+  font-size: 1rem;
+  margin-bottom: 15px;
+  color: #ffcc00;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.skills-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.skill-card {
+  background: #222;
+  padding: 15px;
+  border-radius: 10px;
+  text-align: center;
+  width: 120px;
+  transition: transform 0.3s ease-in-out;
+  animation: fadeInUp 1s ease-in-out;
+}
+
+.skill-card:hover {
+  transform: scale(1.1);
+}
+
+.skill-logo {
+  width: 50px;
+  height: 50px;
+}
+
+.soft-skills-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.soft-skill {
+  background: #ff8a00;
+  display: inline-block;
+  padding: 12px 18px;
+  margin: 5px;
+  border-radius: 5px;
+  color: white;
+  animation: bounce 1.5s infinite alternate;
+}
+
+/* Responsive: Tablet View (768px and below) */
+@media (max-width: 768px) {
+  .skills-container {
+    width: 90%;
+  }
+
+  .skills-grid {
+    gap: 15px;
+  }
+
+  .skill-card {
+    width: 100px;
+    padding: 12px;
+  }
+
+  .skill-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .section-title {
+    font-size: 1.8rem;
+  }
+
+  .skills-category h3 {
+    font-size: 0.9rem;
+  }
+
+  .soft-skill {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* Responsive: Mobile View (480px and below) */
+@media (max-width: 480px) {
+  .skills {
+    padding: 40px 20px;
+  }
+
+  .skills-container {
+    width: 100%;
+  }
+
+  .skills-grid {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .skill-card {
+    width: 90%;
+    padding: 10px;
+  }
+
+  .skill-logo {
+    width: 35px;
+    height: 35px;
+  }
+
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .skills-category h3 {
+    font-size: 0.85rem;
+  }
+
+  .soft-skill {
+    padding: 8px 12px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Popup Adjustments for Mobile */
+@media (max-width: 600px) {
+  .skill-popup-content {
+    max-width: 90%;
+    padding: 15px;
+  }
+
+  .popup-title {
+    font-size: 1.3rem;
+  }
+
+  .popup-item {
+    padding: 6px;
+  }
+
+  .popup-close {
+    padding: 8px 12px;
+  }
+}
+
+/* Keyframe Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-5px);
+  }
+}
+
+/* Highlight Text */
+.highlight {
+  color: #ffcc00;
+  font-weight: bold;
+}

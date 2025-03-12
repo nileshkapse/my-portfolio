@@ -30,3 +30,38 @@
     background: #e67300;
   }
   
+  @media (max-width: 1024px) {
+    .resume-section {
+      padding: 40px;
+    }
+  
+    .resume-buttons {
+      gap: 15px;
+    }
+  
+    .view-btn,
+    .download-btn {
+      font-size: 0.95rem;
+      padding: 10px 18px;
+    }
+  }
+  
+  /* Mobile View (Up to 768px) */
+  @media (max-width: 768px) {
+    .resume-section {
+      padding: 30px;
+    }
+  
+    .resume-buttons {
+      flex-direction: column;
+      gap: 10px;
+    }
+  
+    .view-btn,
+    .download-btn {
+      width: 100%;
+      justify-content: center;
+      padding: 12px;
+      font-size: 1rem;
+    }
+  }
