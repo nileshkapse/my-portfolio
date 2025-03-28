@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "../styles/MainPage.css";
 import { FaMoon, FaSun } from "react-icons/fa";
+import Header from "./Header";
 
 const MainPage = () => {
   const navigate = useNavigate();
@@ -24,27 +25,25 @@ const MainPage = () => {
   return (
     <div className="landingContainer">
       {/* Theme Toggle */}
-      <button className="themeToggle" onClick={toggleTheme}>
-      {theme === "light" ? <FaMoon size={20} /> : <FaSun size={20} />}
-    </button>
+      <Header isMainPage={true} />
 
       {/* Hero Section */}
-      <header className="heroSection">
+      <div className="heroSection">
         <h1 className="heroTitle">Instant Resume to Portfolio</h1>
-        <p className="heroText">
+        <span className="heroText" loading="lazy">
           Upload your resume, fill in details, and get your portfolio live
           instantly.
-        </p>
+        </span>
         <button className="ctaButton" onClick={handleGetStarted}>
           Get Started for Free
         </button>
-      </header>
+      </div>
 
       {/* Video Demo Section */}
       <section className="videoDemo">
         <h2 className="sectionTitle">See It in Action</h2>
         <video controls className="demoVideo">
-          <source src="/InstantPortfolio.mp4" type="video/mp4" />
+          <source src="/InstantPortfolio.mp4" type="video/mp4" loading="lazy" />
           Your browser does not support the video tag.
         </video>
       </section>
@@ -108,7 +107,8 @@ const MainPage = () => {
         <h2 className="sectionTitle">What Users Say</h2>
         <div className="testimonialList">
           <blockquote className="testimonial">
-            "This platform helped me create my portfolio in minutes!" — Aniket Giri
+            "This platform helped me create my portfolio in minutes!" — Aniket
+            Giri
           </blockquote>
           <blockquote className="testimonial">
             "An absolute game-changer for job seekers!" — Nilesh Kapse

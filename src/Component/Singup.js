@@ -77,6 +77,19 @@ const Signup = () => {
 
   return (
     <div className="auth-container">
+      <div
+        className="logo-container"
+        data-theme="light"
+        style={{ top: 30, left: "39%" }}
+      >
+        <span className="logo-text">
+          <img src="/Instant.ico" style={{ height: 30 }} alt=""/>
+          <span className="instant">Instant</span>
+          <span className="portfolio" style={{ color: "black" }}>
+            Portfolio
+          </span>
+        </span>
+      </div>
       <div className={`auth-box ${error ? "shake" : ""}`}>
         <h2>Signup</h2>
 
@@ -91,9 +104,9 @@ const Signup = () => {
             required
             onChange={(e) => setUser({ ...user, name: e.target.value })} // ✅ Correctly setting `name`
           />
-          
+
           <input
-             className="auth-input"
+            className="auth-input"
             type="text"
             placeholder="Enter username"
             value={username}

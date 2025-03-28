@@ -73,7 +73,7 @@ const Dashboard = () => {
 
         <div className="dashboard-grid">
           <div className="dashboard-card">
-            <FaUpload size={40} color="white" />
+            <FaUpload size={40} color="#007bff" />
             <h3>Upload Resume</h3>
             <button
               onClick={() =>
@@ -87,7 +87,7 @@ const Dashboard = () => {
           </div>
 
           <div className="dashboard-card">
-            <FaUserEdit size={40} color="white" />
+            <FaUserEdit size={40} color="#007bff" />
 
             <h3>Profile Settings</h3>
             <button
@@ -102,7 +102,7 @@ const Dashboard = () => {
           </div>
 
           <div className="dashboard-card">
-            <FaFileAlt size={40} color="white" />
+            <FaFileAlt size={40} color="#007bff" />
             <h3>Saved Resumes</h3>
             <button
               onClick={() => {
@@ -128,7 +128,7 @@ const Dashboard = () => {
           </div> */}
 
           <div className="dashboard-card logout-card">
-            <FaSignOutAlt size={40} color="white" />
+            <FaSignOutAlt size={40} color="#007bff" />
             <h3>Logout</h3>
             <button onClick={handleLogout}>Logout</button>
           </div>
