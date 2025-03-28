@@ -1,12 +1,11 @@
 .footer {
-    background: linear-gradient(135deg, #1e1e2e, #3a3a52, #202040);
-    color: white;
-    padding: 1.5rem 0;
-    text-align: center;
-    bottom: 0;
-    right: 0;
-    left: 0;
-  }
+  background: linear-gradient(135deg, #1e1e2e, #3a3a52, #202040);
+  color: white;
+  padding: 1.5rem 0;
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+}
   
   .footerContainer {
     max-width: 1200px;

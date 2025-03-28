@@ -1,6 +1,6 @@
 .skills {
   padding: 60px;
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  /* background: linear-gradient(135deg, #1a1a2e, #16213e); */
   color: white;
   text-align: center;
   animation: fadeIn 1.5s ease-in-out;
@@ -165,8 +165,8 @@
 
 /* Default Styling (For Desktop) */
 .skills {
-  padding: 60px;
-  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  padding: 0 60px;
+  /* background: linear-gradient(135deg, #1a1a2e, #16213e); */
   color: white;
   text-align: center;
   animation: fadeIn 1.5s ease-in-out;
@@ -174,7 +174,7 @@
 
 .section-title {
   font-size: 2rem;
-  margin-bottom: 30px;
+  margin-bottom: 14px;
   color: #ff8a00;
   text-transform: uppercase;
   font-weight: bold;

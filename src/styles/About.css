@@ -1,6 +1,6 @@
 .about {
   padding: 60px;
-  background: linear-gradient(135deg, #1e1e1e, #333);
+  /* background: linear-gradient(135deg, #1e1e1e, #333); */
   color: white;
   text-align: center;
   display: flex;
@@ -77,8 +77,8 @@
 
 /* Default Styling (For Desktop) */
 .about {
-  padding: 60px;
-  background: linear-gradient(135deg, #1e1e1e, #333);
+  padding:60px 60px 30px 60px;
+  /* background: linear-gradient(135deg, #1e1e1e, #333); */
   color: white;
   text-align: center;
   display: flex;

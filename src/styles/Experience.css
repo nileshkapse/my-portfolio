@@ -1,6 +1,6 @@
 .experience {
-  padding: 40px;
-  background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+  padding: 0 40px;
+  /* background: linear-gradient(135deg, #1e1e1e, #2d2d2d); */
   color: white;
   text-align: center;
   display: flex;

@@ -1,7 +1,7 @@
 /* src/styles/Projects.css */
 .projects {
-  padding: 60px;
-  background: linear-gradient(135deg, #1e1e1e, #444);
+  padding: 0 60px;
+  /* background: linear-gradient(135deg, #1e1e1e, #444); */
   color: white;
   text-align: left;
 }

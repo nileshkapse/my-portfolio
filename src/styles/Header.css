@@ -6,7 +6,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 14px;
-  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  background: #171729;
   animation: slideIn 1s ease-in-out;
   /* box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); */
   transition: background 0.3s ease-in-out, padding 0.3s ease-in-out;
@@ -22,11 +22,22 @@
 }
 
 .header.scrolled {
-  background: #e03350;
+  background: #ffffff;
   padding: 15px 20px;
+  color: black !important;
+}
+.portfolio.scrolled,
+.nav-links a.scrolled{
+  color: black ;
 }
 .mobile-menu{
   display: none;
+}
+
+.nav-container {
+  display: flex;
+  align-items: center;
+  gap: 15px;
 }
 .logo {
   font-size: 24px;
@@ -93,7 +104,7 @@
     top: 60px;
     right: 0;
     width: 100%;
-    background: linear-gradient(90deg, #ff8a00, #e52e71);
+    background: #fff;
     text-align: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     transition: all 0.3s ease-in-out;

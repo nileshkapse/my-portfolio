@@ -1,27 +1,36 @@
 /* Gradient Background */
 .auth-container {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  background: #fff;
 }
 
 /* Auth Box */
 .auth-box {
-  background: linear-gradient(135deg, #222, #444);
   padding: 2rem;
   border-radius: 12px;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   text-align: center;
   width: 320px;
-  color: white;
+  margin-top: 32px;
+  color: rgb(0, 0, 0);
   transition: transform 0.2s;
+  font-family: "dm-sans-regular",sans-serif;
 }
 
 /* Shake Animation */
 .shake {
   animation: shake 0.3s ease-in-out;
+}
+
+.onboarding-beta {
+  margin-top: -10px;
+  margin-bottom: 20px;
+  background: url(../../public/quick-sign-up.png) 50% 50% / auto 120px no-repeat;
+  height: 120px;
 }
 
 @keyframes shake {
@@ -36,17 +45,16 @@
   width: 90%;
   padding: 12px;
   margin: 10px 0;
-  border: none;
   border-radius: 6px;
   background: rgba(255, 255, 255, 0.1);
-  color: white;
+  color: rgb(0, 0, 0);
   font-size: 16px;
   outline: none;
   transition: 0.3s;
 }
 
 .auth-input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(0, 0, 0, 0.7);
 }
 
 .auth-input:focus {
@@ -60,7 +68,7 @@
   padding: 12px;
   border: none;
   border-radius: 6px;
-  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  background: linear-gradient(135deg, #e52e71, #ff8a00);
   color: white;
   font-size: 16px;
   font-weight: bold;
@@ -98,12 +106,11 @@
 /* Signup/Login Text */
 .signup-text {
   margin-top: 12px;
-  color: rgba(255, 255, 255, 0.8);
 }
 
 /* Signup/Login Link */
 .signup-link {
-  color: #ff8a00;
+  color: #0056b2;
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s ease-in-out;
@@ -130,7 +137,7 @@
 
   /* Adjust Auth Box for Mobile */
   .auth-box {
-    width: 90%;
+    width: 80%;
     padding: 1.5rem;
     border-radius: 10px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -138,7 +145,7 @@
 
   /* Adjust Input Fields */
   .auth-input {
-    width: 100%;
+    width: 90%;
     padding: 10px;
     font-size: 14px;
   }
