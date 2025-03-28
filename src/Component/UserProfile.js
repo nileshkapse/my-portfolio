@@ -81,9 +81,8 @@ const UserProfile = () => {
         setZomatoLogos((prevLogos) =>
           [...Array(5)].map(() => ({
             id: Math.random(),
-            top: `${
-              window.scrollY + Math.random() * window.innerHeight * 0.8
-            }px`,
+            top: `${window.scrollY + Math.random() * window.innerHeight * 0.8
+              }px`,
             left: `${Math.random() * window.innerWidth * 0.8}px`,
             animationDelay: `${Math.random() * 2}s`,
           }))
@@ -199,25 +198,26 @@ const UserProfile = () => {
           </div>
         )}
         <Header />
-        <Hero userData={userData}/>
-        <About userData={userData}/>
-        <Skills userData={userData}/>
+        <Hero userData={userData} />
+        <About userData={userData} />
+        <Skills userData={userData} />
         <Experience userData={userData} />
-        <Projects userData={userData}/>
-        <Resume userData={userData}/>
-        <Contact userData={userData}/>
+        <Projects userData={userData} />
+        <Resume userData={userData} />
+        <Contact userData={userData} />
         {showScroll && (
           <button className="scroll-to-top" onClick={scrollToTop}>
             <FaArrowUp />
           </button>
         )}
-        <button
-          className="chatbot-toggle"
-          onClick={() => setShowChatbot(!showChatbot)}
-        >
-          <FaRobot />
-        </button>
-        {showChatbot&& username==="nilesh_kapse" && (
+        {username == "nilesh_kapse" && (<>
+          <button
+            className="chatbot-toggle"
+            onClick={() => setShowChatbot(!showChatbot)}
+          >
+            <FaRobot />
+          </button></>)}
+        {showChatbot && username === "nilesh_kapse" && (
           <div className="chatbot-container">
             <div className="chatbot-header">
               Chatbot Assistant
