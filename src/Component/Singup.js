@@ -80,7 +80,6 @@ const Signup = () => {
       <div
         className="logo-container"
         data-theme="light"
-        style={{ top: 30, left: "39%" }}
       >
         <span className="logo-text">
           <img src="/Instant.ico" style={{ height: 30 }} alt=""/>
