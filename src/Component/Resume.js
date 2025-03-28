@@ -24,7 +24,7 @@ function Resume(props) {
   };
 
   return (
-    <section id="resume" className="resume-section">
+    <section id="resume" className="resume-section1">
       <h2>My Resume</h2>
       <div className="resume-buttons">
         <button

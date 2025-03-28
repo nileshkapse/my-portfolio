@@ -9,33 +9,44 @@ const Login = () => {
   const navigate = useNavigate();
   const { login } = useAuth(); // Use the login function from AuthContext
 
+  const handleChange = (e) => {
+    setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
+    setError(null); // Reset error before new request
+
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/login`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(credentials),
       });
 
       const data = await response.json();
 
-      if (data.success) {
-        login({ token: data.token, userId: data.userId }); // Store user info globally
-        navigate("/dashboard"); // Redirect to dashboard
-      } else {
-        setError(data.message || "Invalid email or password ❌");
+      if (!response.ok) {
+        throw new Error(data.message || "Invalid email or password ❌");
       }
-    } catch (error) {
-      console.error("Login error:", error);
-      setError("Error logging in ❌");
+
+      login({ token: data.token, userId: data.userId }); // Store user info globally
+      navigate("/dashboard"); // Redirect to dashboard
+    } catch (err) {
+      setError(err.message);
     }
   };
 
   return (
     <div className="auth-container">
+      <div className="logo-container" data-theme="light">
+        <span className="logo-text">
+          <img src="/Instant.ico" alt="" style={{ height: 30 }} />
+          <span className="instant">Instant</span>
+          <span className="portfolio" style={{ color: "black" }}>Portfolio</span>
+        </span>
+      </div>
+
       <div className={`auth-box ${error ? "shake" : ""}`}>
         <h2>Login</h2>
         {error && <p className="error-message">{error}</p>}
@@ -43,34 +54,32 @@ const Login = () => {
         <form onSubmit={handleLogin}>
           <input
             type="email"
+            name="email"
             className="auth-input"
             placeholder="Email"
             required
-            onChange={(e) =>
-              setCredentials({ ...credentials, email: e.target.value })
-            }
+            value={credentials.email}
+            onChange={handleChange}
           />
           <input
             type="password"
+            name="password"
             className="auth-input"
             placeholder="Password"
             required
-            onChange={(e) =>
-              setCredentials({ ...credentials, password: e.target.value })
-            }
+            value={credentials.password}
+            onChange={handleChange}
           />
-          <button type="submit" className="auth-button">
-            Login
-          </button>
+          <button type="submit" className="auth-button">Login</button>
         </form>
 
         {/* Signup Link */}
-        <p className="signup-text">
+        <span className="signup-text">
           Don't have an account?{" "}
           <span className="signup-link" onClick={() => navigate("/signup")}>
             Sign up here
           </span>
-        </p>
+        </span>
       </div>
     </div>
   );

@@ -1,27 +1,13 @@
 import React, { useState } from "react";
 import "../styles/ResumeForm.css";
-import { FaChevronDown, FaChevronUp } from "react-icons/fa";
+import { FaChevronDown, FaChevronUp, FaUpload } from "react-icons/fa";
 import Header from "./Header";
 import { useLocation, useNavigate } from "react-router-dom";
-
-const indianDegrees = [
-  "Bachelor of Engineering (B.E.)",
-  "Bachelor of Technology (B.Tech)",
-  "Master of Technology (M.Tech)",
-  "Bachelor of Science (B.Sc.)",
-  "Master of Science (M.Sc.)",
-  "Bachelor of Commerce (B.Com)",
-  "Master of Commerce (M.Com)",
-  "Bachelor of Arts (B.A.)",
-  "Master of Arts (M.A.)",
-  "Bachelor of Business Administration (BBA)",
-  "Master of Business Administration (MBA)",
-  "Other",
-];
+import { IndianDegrees } from "../Constant/Constant";
 
 const ResumeForm = () => {
   const location = useLocation();
-  const userData = location.state?.user || {}; 
+  const userData = location.state?.user || {};
 
   const [user, setUser] = useState(userData);
   const [resumeData, setResumeData] = useState(null);
@@ -54,22 +40,45 @@ const ResumeForm = () => {
     setResumeData({ ...resumeData, [section]: updatedSection });
   };
 
+  const handleFileChange = (e) => {
+    const selectedFile = e.target.files[0];
+
+    if (selectedFile) {
+      const allowedTypes = [
+        "application/pdf",
+        "application/msword",
+        "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+      ];
+      if (!allowedTypes.includes(selectedFile.type)) {
+        setErrorMessage("Only PDF, DOC, and DOCX files are allowed.");
+        setFile(null);
+      } else {
+        setErrorMessage("");
+        setFile(selectedFile);
+      }
+    }
+  };
+
   const handleUpload = async (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const formData = new FormData();
-    formData.append("username",userData.username)
+    formData.append("username", userData.username);
     formData.append("resume", file);
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/upload-resume`, {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/upload-resume`,
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
       const result = await response.json();
 
       if (result.success) {
         setResumeData(result.data);
+        setShowPopup(false)
       } else {
         setErrorMessage(
           "Failed to parse resume. Please enter details manually."
@@ -83,6 +92,7 @@ const ResumeForm = () => {
           projects: [],
           achievements: [],
           otherSections: [], // Ensure this exists
+          
         });
       }
     } catch (error) {
@@ -92,11 +102,14 @@ const ResumeForm = () => {
 
   const handleSave = async () => {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/save-resume`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, ...resumeData }),
-      });
+      const response = await fetch(
+        `${process.env.REACT_APP_API_URL}/save-resume`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, ...resumeData }),
+        }
+      );
 
       const result = await response.json();
 
@@ -136,7 +149,7 @@ const ResumeForm = () => {
       ...resumeData,
       projects: [
         ...resumeData.projects,
-        { name: "",shortDescription:"", description: [], technologies: [] },
+        { name: "", shortDescription: "", description: [], technologies: [] },
       ],
     });
   };
@@ -230,731 +243,718 @@ const ResumeForm = () => {
   return (
     <>
       <Header />
-      {showPopup && (
-        <div className="resume-popup-overlay">
-          <div className="resume-popup-content">
-            <div className="resume-popup-header">
-              <h2>Upload & Edit Resume</h2>
-              <button
-                className="resume-close-btn"
-                onClick={() => {
-                  setShowPopup(false);
-                  navigate("/dashboard");
-                }}
-              >
-                ✖
-              </button>
-            </div>
 
-            {!resumeData ? (
-              <div className="resume-upload">
+      <div className="resume-popup-overlay">
+        {showPopup && (
+          <div className="resume-upload-container">
+            <button
+              className="resume-close-btn"
+              onClick={() => {
+                setShowPopup(false);
+                navigate("/dashboard");
+              }}
+            >
+              ✖
+            </button>
+            {/* Upload Box */}
+            <label className="upload-box">
+              <FaUpload size={40} className="upload-icon" />
+              <p className="upload-text">
+                {file ? file.name : "Click or Drag & Drop to Upload Resume"}
+              </p>
+              <input
+                type="file"
+                className="resume-input-file"
+                onChange={handleFileChange}
+              />
+            </label>
+
+            {/* Upload Button */}
+            <button
+              className="upload-btn"
+              onClick={() => file && handleUpload(file)}
+              disabled={!file}
+            >
+              Upload Resume
+            </button>
+
+            {/* Error Message */}
+            {errorMessage && <p className="error-message">{errorMessage}</p>}
+          </div>
+        )}
+
+        {resumeData && (
+          <div className="resume-popup-content">
+             <button
+              className="resume-close-btn"
+              onClick={() => {
+                setShowPopup(false);
+                navigate("/dashboard");
+              }}
+            >
+              ✖
+            </button>
+            <div className="resume-form">
+              <div className="resume-form-section">
+                <label>Username:</label>
                 <input
-                  type="file"
                   className="resume-input"
-                  onChange={(e) => setFile(e.target.files[0])}
+                  value={username}
+                  onChange={(e) => {
+                    setUsername(e.target.value);
+                    checkUsername(e.target.value);
+                  }}
                 />
-                <button className="resume-btn" onClick={handleUpload}>
-                  Upload
-                </button>
-                {errorMessage && (
-                  <p className="error-message">{errorMessage}</p>
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                {availability !== null && (
+                  <p style={{ color: availability ? "green" : "red" }}>
+                    {availability
+                      ? "✅ Username is available"
+                      : "❌ Username is taken"}
+                  </p>
                 )}
               </div>
-            ) : (
-              <div className="resume-form">
-                <div className="resume-form-section">
-                  <label>Username:</label>
-                  <input
-                    className="resume-input"
-                    value={username}
-                    onChange={(e) => {
-                      setUsername(e.target.value);
-                      checkUsername(e.target.value);
-                    }}
-                  />
-                  {error && <p style={{ color: "red" }}>{error}</p>}
-                  {availability !== null && (
-                    <p style={{ color: availability ? "green" : "red" }}>
-                      {availability
-                        ? "✅ Username is available"
-                        : "❌ Username is taken"}
-                    </p>
-                  )}
+              <div className="resume-form-section">
+                <label>Summary:</label>
+                <textarea
+                  className="resume-textarea"
+                  value={resumeData.summary}
+                  onChange={(e) =>
+                    setResumeData({ ...resumeData, summary: e.target.value })
+                  }
+                />
+              </div>
+              <div className="resume-accordion">
+                <div
+                  className="accordion-header"
+                  onClick={() => toggleSection("profile")}
+                >
+                  <h3>Profile details</h3>
+                  {showSections.profile ? <FaChevronUp /> : <FaChevronDown />}
                 </div>
-                <div className="resume-form-section">
-                  <label>Summary:</label>
-                  <textarea
-                    className="resume-textarea"
-                    value={resumeData.summary}
-                    onChange={(e) =>
-                      setResumeData({ ...resumeData, summary: e.target.value })
-                    }
-                  />
-                </div>
-                <div className="resume-accordion">
-                  <div
-                    className="accordion-header"
-                    onClick={() => toggleSection("profile")}
-                  >
-                    <h3>Profile details</h3>
-                    {showSections.profile ? <FaChevronUp /> : <FaChevronDown />}
-                  </div>
-                  {showSections.profile && (
-                    <div className="resume-section-form">
-                      <div className="resume-form-section">
-                        <label>Profile Photo Link:</label>
-                        <input
-                          className="resume-input"
-                          value={resumeData.contact?.profilePhoto || ""}
-                          onChange={(e) =>
-                            setResumeData({
-                              ...resumeData,
-                              contact: {
-                                ...resumeData.contact,
-                                profilePhoto: e.target.value,
-                              },
-                            })
-                          }
-                        />
-                      </div>
-
-                      <div className="resume-form-section">
-                        <label>Mobile Number:</label>
-                        <input
-                          className="resume-input"
-                          value={resumeData.contact?.phone || ""}
-                          onChange={(e) =>
-                            setResumeData({
-                              ...resumeData,
-                              contact: {
-                                ...resumeData.contact,
-                                phone: e.target.value,
-                              },
-                            })
-                          }
-                        />
-                      </div>
-
-                      <div className="resume-form-section">
-                        <label>Email Address:</label>
-                        <input
-                          className="resume-input"
-                          value={resumeData.contact?.email || ""}
-                          onChange={(e) =>
-                            setResumeData({
-                              ...resumeData,
-                              contact: {
-                                ...resumeData.contact,
-                                email: e.target.value,
-                              },
-                            })
-                          }
-                        />
-                      </div>
-
-                      <div className="resume-form-section">
-                        <label>GitHub Profile:</label>
-                        <input
-                          className="resume-input"
-                          value={resumeData.contact?.github || ""}
-                          onChange={(e) =>
-                            setResumeData({
-                              ...resumeData,
-                              contact: {
-                                ...resumeData.contact,
-                                github: e.target.value,
-                              },
-                            })
-                          }
-                        />
-                      </div>
-
-                      <div className="resume-form-section">
-                        <label>LinkedIn Profile:</label>
-                        <input
-                          className="resume-input"
-                          value={resumeData.contact?.linkedin || ""}
-                          onChange={(e) =>
-                            setResumeData({
-                              ...resumeData,
-                              contact: {
-                                ...resumeData.contact,
-                                linkedin: e.target.value,
-                              },
-                            })
-                          }
-                        />
-                      </div>
+                {showSections.profile && (
+                  <div className="resume-section-form">
+                    <div className="resume-form-section">
+                      <label>Profile Photo Link:</label>
+                      <input
+                        className="resume-input"
+                        value={resumeData.contact?.profilePhoto || ""}
+                        onChange={(e) =>
+                          setResumeData({
+                            ...resumeData,
+                            contact: {
+                              ...resumeData.contact,
+                              profilePhoto: e.target.value,
+                            },
+                          })
+                        }
+                      />
                     </div>
-                  )}
-                </div>
 
-                <div className="resume-accordion">
-                  <div
-                    className="accordion-header"
-                    onClick={() => toggleSection("skills")}
-                  >
-                    <h3>Skills</h3>
-                    {showSections.skills ? <FaChevronUp /> : <FaChevronDown />}
-                  </div>
-                  {showSections.skills && (
-                    <div className="resume-section-form">
-                      {Object.entries(resumeData.skills).map(
-                        ([category, skills], index) => (
-                          <div key={index} className="resume-skill-category">
-                            <h4>
-                              {category.charAt(0).toUpperCase() +
-                                category.slice(1)}
-                            </h4>
-                            <textarea
-                              className="resume-textarea"
-                              value={skills.join(", ")}
-                              onChange={(e) =>
-                                setResumeData({
-                                  ...resumeData,
-                                  skills: {
-                                    ...resumeData.skills,
-                                    [category]: e.target.value.split(", "),
-                                  },
-                                })
-                              }
-                            />
-                          </div>
-                        )
-                      )}
+                    <div className="resume-form-section">
+                      <label>Mobile Number:</label>
+                      <input
+                        className="resume-input"
+                        value={resumeData.contact?.phone || ""}
+                        onChange={(e) =>
+                          setResumeData({
+                            ...resumeData,
+                            contact: {
+                              ...resumeData.contact,
+                              phone: e.target.value,
+                            },
+                          })
+                        }
+                      />
                     </div>
-                  )}
-                </div>
 
-                <div className="resume-accordion">
-                  <div
-                    className="accordion-header"
-                    onClick={() => toggleSection("experience")}
-                  >
-                    <h3>Experience</h3>
-                    {showSections.experience ? (
-                      <FaChevronUp />
-                    ) : (
-                      <FaChevronDown />
+                    <div className="resume-form-section">
+                      <label>Email Address:</label>
+                      <input
+                        className="resume-input"
+                        value={resumeData.contact?.email || ""}
+                        onChange={(e) =>
+                          setResumeData({
+                            ...resumeData,
+                            contact: {
+                              ...resumeData.contact,
+                              email: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+
+                    <div className="resume-form-section">
+                      <label>GitHub Profile:</label>
+                      <input
+                        className="resume-input"
+                        value={resumeData.contact?.github || ""}
+                        onChange={(e) =>
+                          setResumeData({
+                            ...resumeData,
+                            contact: {
+                              ...resumeData.contact,
+                              github: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+
+                    <div className="resume-form-section">
+                      <label>LinkedIn Profile:</label>
+                      <input
+                        className="resume-input"
+                        value={resumeData.contact?.linkedin || ""}
+                        onChange={(e) =>
+                          setResumeData({
+                            ...resumeData,
+                            contact: {
+                              ...resumeData.contact,
+                              linkedin: e.target.value,
+                            },
+                          })
+                        }
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div className="resume-accordion">
+                <div
+                  className="accordion-header"
+                  onClick={() => toggleSection("skills")}
+                >
+                  <h3>Skills</h3>
+                  {showSections.skills ? <FaChevronUp /> : <FaChevronDown />}
+                </div>
+                {showSections.skills && (
+                  <div className="resume-section-form">
+                    {Object.entries(resumeData.skills).map(
+                      ([category, skills], index) => (
+                        <div key={index} className="resume-skill-category">
+                          <h4>
+                            {category.charAt(0).toUpperCase() +
+                              category.slice(1)}
+                          </h4>
+                          <textarea
+                            className="resume-textarea"
+                            value={skills.join(", ")}
+                            onChange={(e) =>
+                              setResumeData({
+                                ...resumeData,
+                                skills: {
+                                  ...resumeData.skills,
+                                  [category]: e.target.value.split(", "),
+                                },
+                              })
+                            }
+                          />
+                        </div>
+                      )
                     )}
                   </div>
-                  {showSections.experience && (
-                    <div className="resume-section-form">
-                      {resumeData.experience.map((exp, index) => {
-                        // Convert startDate to a valid format (if needed)
-                        let formattedStartDate = exp.startDate
-                          ? new Date(exp.startDate).toISOString().split("T")[0]
-                          : "";
+                )}
+              </div>
 
-                        // Handle "Present" as empty value for endDate
-                        let formattedEndDate;
+              <div className="resume-accordion">
+                <div
+                  className="accordion-header"
+                  onClick={() => toggleSection("experience")}
+                >
+                  <h3>Experience</h3>
+                  {showSections.experience ? (
+                    <FaChevronUp />
+                  ) : (
+                    <FaChevronDown />
+                  )}
+                </div>
+                {showSections.experience && (
+                  <div className="resume-section-form">
+                    {resumeData.experience.map((exp, index) => {
+                      // Convert startDate to a valid format (if needed)
+                      let formattedStartDate = exp.startDate
+                        ? new Date(exp.startDate).toISOString().split("T")[0]
+                        : "";
 
-                        if (!exp.endDate || exp.endDate.trim() === "") {
-                          console.error("Invalid endDate:", exp.endDate);
-                          formattedEndDate = ""; // or some default value
-                        } else if (exp.endDate.toLowerCase() === "present") {
-                          formattedEndDate = new Date()
+                      // Handle "Present" as empty value for endDate
+                      let formattedEndDate;
+
+                      if (!exp.endDate || exp.endDate.trim() === "") {
+                        console.error("Invalid endDate:", exp.endDate);
+                        formattedEndDate = ""; // or some default value
+                      } else if (exp.endDate.toLowerCase() === "present") {
+                        formattedEndDate = new Date()
+                          .toISOString()
+                          .split("T")[0];
+                      } else {
+                        const parsedDate = new Date(exp.endDate);
+                        if (isNaN(parsedDate.getTime())) {
+                          console.error("Invalid date format:", exp.endDate);
+                          formattedEndDate = ""; // or handle it appropriately
+                        } else {
+                          formattedEndDate = parsedDate
                             .toISOString()
                             .split("T")[0];
-                        } else {
-                          const parsedDate = new Date(exp.endDate);
-                          if (isNaN(parsedDate.getTime())) {
-                            console.error("Invalid date format:", exp.endDate);
-                            formattedEndDate = ""; // or handle it appropriately
-                          } else {
-                            formattedEndDate = parsedDate
-                              .toISOString()
-                              .split("T")[0];
-                          }
                         }
+                      }
 
-                        return (
-                          <div key={index} className="resume-experience-card">
-                            <button
-                              className="delete-btn"
-                              onClick={() => deleteItem("experience", index)}
-                            >
-                              🗑
-                            </button>
-
-                            <label>Company:</label>
-                            <input
-                              className="resume-input"
-                              value={exp.company}
-                              onChange={(e) => {
-                                const updatedExperience = [
-                                  ...resumeData.experience,
-                                ];
-                                updatedExperience[index].company =
-                                  e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  experience: updatedExperience,
-                                });
-                              }}
-                            />
-
-                            <label>Location:</label>
-                            <input
-                              className="resume-input"
-                              value={exp.location}
-                              onChange={(e) => {
-                                const updatedExperience = [
-                                  ...resumeData.experience,
-                                ];
-                                updatedExperience[index].location =
-                                  e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  experience: updatedExperience,
-                                });
-                              }}
-                            />
-
-                            <label>Role:</label>
-                            <input
-                              className="resume-input"
-                              value={exp.role}
-                              onChange={(e) => {
-                                const updatedExperience = [
-                                  ...resumeData.experience,
-                                ];
-                                updatedExperience[index].role = e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  experience: updatedExperience,
-                                });
-                              }}
-                            />
-
-                            <label>Start Date:</label>
-                            <input
-                              type="date"
-                              className="resume-input"
-                              value={formattedStartDate}
-                              onChange={(e) => {
-                                const updatedExperience = [
-                                  ...resumeData.experience,
-                                ];
-                                updatedExperience[index].startDate =
-                                  e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  experience: updatedExperience,
-                                });
-                              }}
-                            />
-
-                            <label>End Date:</label>
-                            <input
-                              type="date"
-                              className="resume-input"
-                              value={formattedEndDate}
-                              onChange={(e) => {
-                                const updatedExperience = [
-                                  ...resumeData.experience,
-                                ];
-                                updatedExperience[index].endDate =
-                                  e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  experience: updatedExperience,
-                                });
-                              }}
-                            />
-                          </div>
-                        );
-                      })}
-                      <button onClick={addExperience} className="add-btn">
-                        + Add Experience
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                <div className="resume-accordion">
-                  <div
-                    className="accordion-header"
-                    onClick={() => toggleSection("education")}
-                  >
-                    <h3>Education</h3>
-                    {showSections.education ? (
-                      <FaChevronUp />
-                    ) : (
-                      <FaChevronDown />
-                    )}
-                  </div>
-                  {showSections.education && (
-                    <div className="resume-section-form">
-                      {resumeData.education.map((edu, index) => {
-                        // ✅ Function to safely parse dates
-                        const parseDate = (dateStr) => {
-                          if (
-                            !dateStr ||
-                            dateStr.toLowerCase().includes("present")
-                          ) {
-                            return ""; // Leave blank for "Present"
-                          }
-                          const parsedDate = Date.parse(dateStr);
-                          return isNaN(parsedDate)
-                            ? ""
-                            : new Date(parsedDate).toISOString().split("T")[0];
-                        };
-
-                        return (
-                          <div key={index} className="resume-education-card">
-                            <button
-                              className="delete-btn"
-                              onClick={() => deleteItem("education", index)}
-                            >
-                              🗑
-                            </button>
-
-                            <label>College:</label>
-                            <input
-                              className="resume-input"
-                              value={edu.college}
-                              onChange={(e) => {
-                                const updatedEducation = [
-                                  ...resumeData.education,
-                                ];
-                                updatedEducation[index].college =
-                                  e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  education: updatedEducation,
-                                });
-                              }}
-                            />
-
-                            <label>Location:</label>
-                            <input
-                              className="resume-input"
-                              value={edu.location}
-                              onChange={(e) => {
-                                const updatedEducation = [
-                                  ...resumeData.education,
-                                ];
-                                updatedEducation[index].location =
-                                  e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  education: updatedEducation,
-                                });
-                              }}
-                            />
-
-                            <label>Degree:</label>
-                            <select
-                              className="resume-input"
-                              value={edu.degree}
-                              onChange={(e) => {
-                                const updatedEducation = [
-                                  ...resumeData.education,
-                                ];
-                                updatedEducation[index].degree = e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  education: updatedEducation,
-                                });
-                              }}
-                            >
-                              {indianDegrees.map((deg, i) => (
-                                <option key={i} value={deg}>
-                                  {deg}
-                                </option>
-                              ))}
-                            </select>
-
-                            <label>Start Date:</label>
-                            <input
-                              type="date"
-                              className="resume-input"
-                              value={parseDate(edu.startDate)}
-                              onChange={(e) => {
-                                const updatedEducation = [
-                                  ...resumeData.education,
-                                ];
-                                updatedEducation[index].startDate =
-                                  e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  education: updatedEducation,
-                                });
-                              }}
-                            />
-
-                            <label>End Date:</label>
-                            <input
-                              type="date"
-                              className="resume-input"
-                              value={parseDate(edu.endDate)}
-                              onChange={(e) => {
-                                const updatedEducation = [
-                                  ...resumeData.education,
-                                ];
-                                updatedEducation[index].endDate =
-                                  e.target.value;
-                                setResumeData({
-                                  ...resumeData,
-                                  education: updatedEducation,
-                                });
-                              }}
-                            />
-                          </div>
-                        );
-                      })}
-                      <button onClick={addEducation} className="add-btn">
-                        + Add Education
-                      </button>
-                    </div>
-                  )}
-                </div>
-
-                <div className="resume-accordion">
-                  <div
-                    className="accordion-header"
-                    onClick={() => toggleSection("projects")}
-                  >
-                    <h3>Projects</h3>
-                    {showSections.projects ? (
-                      <FaChevronUp />
-                    ) : (
-                      <FaChevronDown />
-                    )}
-                  </div>
-                  {showSections.projects && (
-                    <div className="resume-section-form">
-                      {resumeData.projects.map((project, index) => (
-                        <div key={index} className="resume-project-card">
+                      return (
+                        <div key={index} className="resume-experience-card">
                           <button
                             className="delete-btn"
-                            onClick={() => deleteItem("projects", index)}
+                            onClick={() => deleteItem("experience", index)}
                           >
                             🗑
                           </button>
-                          <label>Project Name :</label>
+
+                          <label>Company:</label>
                           <input
                             className="resume-input"
-                            value={project.name}
+                            value={exp.company}
+                            onChange={(e) => {
+                              const updatedExperience = [
+                                ...resumeData.experience,
+                              ];
+                              updatedExperience[index].company = e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                experience: updatedExperience,
+                              });
+                            }}
                           />
-                          <label>Short Description :</label>
+
+                          <label>Location:</label>
                           <input
                             className="resume-input"
-                            value={project.shortDescription}
+                            value={exp.location}
+                            onChange={(e) => {
+                              const updatedExperience = [
+                                ...resumeData.experience,
+                              ];
+                              updatedExperience[index].location =
+                                e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                experience: updatedExperience,
+                              });
+                            }}
                           />
-                          <label>Description:</label>
-                          <textarea
-                            className="resume-textarea"
-                            value={project.description.join("\n")}
-                          />
-                          <label>Technologies:</label>
+
+                          <label>Role:</label>
                           <input
                             className="resume-input"
-                            value={project.technologies.join(", ")}
+                            value={exp.role}
+                            onChange={(e) => {
+                              const updatedExperience = [
+                                ...resumeData.experience,
+                              ];
+                              updatedExperience[index].role = e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                experience: updatedExperience,
+                              });
+                            }}
+                          />
+
+                          <label>Start Date:</label>
+                          <input
+                            type="date"
+                            className="resume-input"
+                            value={formattedStartDate}
+                            onChange={(e) => {
+                              const updatedExperience = [
+                                ...resumeData.experience,
+                              ];
+                              updatedExperience[index].startDate =
+                                e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                experience: updatedExperience,
+                              });
+                            }}
+                          />
+
+                          <label>End Date:</label>
+                          <input
+                            type="date"
+                            className="resume-input"
+                            value={formattedEndDate}
+                            onChange={(e) => {
+                              const updatedExperience = [
+                                ...resumeData.experience,
+                              ];
+                              updatedExperience[index].endDate = e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                experience: updatedExperience,
+                              });
+                            }}
                           />
                         </div>
-                      ))}
-                      <button onClick={addProject} className="add-btn">
-                        + Add Project
-                      </button>
-                    </div>
-                  )}
+                      );
+                    })}
+                    <button onClick={addExperience} className="add-btn">
+                      + Add Experience
+                    </button>
+                  </div>
+                )}
+              </div>
+
+              <div className="resume-accordion">
+                <div
+                  className="accordion-header"
+                  onClick={() => toggleSection("education")}
+                >
+                  <h3>Education</h3>
+                  {showSections.education ? <FaChevronUp /> : <FaChevronDown />}
                 </div>
+                {showSections.education && (
+                  <div className="resume-section-form">
+                    {resumeData.education.map((edu, index) => {
+                      // ✅ Function to safely parse dates
+                      const parseDate = (dateStr) => {
+                        if (
+                          !dateStr ||
+                          dateStr.toLowerCase().includes("present")
+                        ) {
+                          return ""; // Leave blank for "Present"
+                        }
+                        const parsedDate = Date.parse(dateStr);
+                        return isNaN(parsedDate)
+                          ? ""
+                          : new Date(parsedDate).toISOString().split("T")[0];
+                      };
 
-                <button onClick={addOtherSection} className="add-btn">
-                  + Add Other Section
-                </button>
-
-                {showOtherSections && (
-                  <>
-                    <div className="resume-accordion">
-                      <div
-                        className="accordion-header"
-                        onClick={() => toggleSection("certifications")}
-                      >
-                        <h3>Certifications</h3>
-                        {showSections.certifications ? (
-                          <FaChevronUp />
-                        ) : (
-                          <FaChevronDown />
-                        )}
-                      </div>
-                      {showSections.certifications && (
-                        <div className="resume-section-form">
-                          {resumeData.certifications.map((cert, index) => (
-                            <div
-                              key={index}
-                              className="resume-certification-card"
-                            >
-                              <button
-                                className="delete-btn"
-                                onClick={() =>
-                                  deleteItem("certification", index)
-                                }
-                              >
-                                🗑
-                              </button>
-                              <label>Certificate Name:</label>
-                              <input
-                                className="resume-input"
-                                value={cert.name}
-                                onChange={(e) =>
-                                  updateCertification(
-                                    index,
-                                    "name",
-                                    e.target.value
-                                  )
-                                }
-                              />
-
-                              <label>Description:</label>
-                              <textarea
-                                className="resume-textarea"
-                                value={cert.description}
-                                onChange={(e) =>
-                                  updateCertification(
-                                    index,
-                                    "description",
-                                    e.target.value
-                                  )
-                                }
-                              />
-
-                              <label>Certificate Link:</label>
-                              <input
-                                className="resume-input"
-                                value={cert.link}
-                                onChange={(e) =>
-                                  updateCertification(
-                                    index,
-                                    "link",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
-                          ))}
+                      return (
+                        <div key={index} className="resume-education-card">
                           <button
-                            onClick={addCertification}
-                            className="add-btn"
+                            className="delete-btn"
+                            onClick={() => deleteItem("education", index)}
                           >
-                            + Add Certification
+                            🗑
                           </button>
+
+                          <label>College:</label>
+                          <input
+                            className="resume-input"
+                            value={edu.college}
+                            onChange={(e) => {
+                              const updatedEducation = [
+                                ...resumeData.education,
+                              ];
+                              updatedEducation[index].college = e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                education: updatedEducation,
+                              });
+                            }}
+                          />
+
+                          <label>Location:</label>
+                          <input
+                            className="resume-input"
+                            value={edu.location}
+                            onChange={(e) => {
+                              const updatedEducation = [
+                                ...resumeData.education,
+                              ];
+                              updatedEducation[index].location = e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                education: updatedEducation,
+                              });
+                            }}
+                          />
+
+                          <label>Degree:</label>
+                          <select
+                            className="resume-input"
+                            value={edu.degree}
+                            onChange={(e) => {
+                              const updatedEducation = [
+                                ...resumeData.education,
+                              ];
+                              updatedEducation[index].degree = e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                education: updatedEducation,
+                              });
+                            }}
+                          >
+                            {IndianDegrees.map((deg, i) => (
+                              <option key={i} value={deg}>
+                                {deg}
+                              </option>
+                            ))}
+                          </select>
+
+                          <label>Start Date:</label>
+                          <input
+                            type="date"
+                            className="resume-input"
+                            value={parseDate(edu.startDate)}
+                            onChange={(e) => {
+                              const updatedEducation = [
+                                ...resumeData.education,
+                              ];
+                              updatedEducation[index].startDate =
+                                e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                education: updatedEducation,
+                              });
+                            }}
+                          />
+
+                          <label>End Date:</label>
+                          <input
+                            type="date"
+                            className="resume-input"
+                            value={parseDate(edu.endDate)}
+                            onChange={(e) => {
+                              const updatedEducation = [
+                                ...resumeData.education,
+                              ];
+                              updatedEducation[index].endDate = e.target.value;
+                              setResumeData({
+                                ...resumeData,
+                                education: updatedEducation,
+                              });
+                            }}
+                          />
                         </div>
-                      )}
-                    </div>
+                      );
+                    })}
+                    <button onClick={addEducation} className="add-btn">
+                      + Add Education
+                    </button>
+                  </div>
+                )}
+              </div>
 
-                    <div className="resume-accordion">
-                      <div
-                        className="accordion-header"
-                        onClick={() => toggleSection("certifications")}
-                      >
-                        <h3>Achievements</h3>
-                        {showSections.certifications ? (
-                          <FaChevronUp />
-                        ) : (
-                          <FaChevronDown />
-                        )}
-                      </div>
-                      {showSections.certifications && (
-                        <div className="resume-section-form">
-                          {resumeData.achievements.map((ach, index) => (
-                            <div
-                              key={index}
-                              className="resume-achievement-card"
-                            >
-                              <button
-                                className="delete-btn"
-                                onClick={() =>
-                                  deleteItem("achievements", index)
-                                }
-                              >
-                                🗑
-                              </button>
-                              <label>Achievement Name:</label>
-                              <input
-                                className="resume-input"
-                                value={ach.name}
-                                onChange={(e) =>
-                                  updateAchievement(
-                                    index,
-                                    "name",
-                                    e.target.value
-                                  )
-                                }
-                              />
-
-                              <label>Description:</label>
-                              <textarea
-                                className="resume-textarea"
-                                value={ach.description}
-                                onChange={(e) =>
-                                  updateAchievement(
-                                    index,
-                                    "description",
-                                    e.target.value
-                                  )
-                                }
-                              />
-                            </div>
-                          ))}
-                          <button onClick={addAchievement} className="add-btn">
-                            + Add Achievement
-                          </button>
-                        </div>
-                      )}
-                    </div>
-
-                    <h3>Other Sections</h3>
-                    {resumeData?.otherSections?.map((section, index) => (
-                      <div key={index} className="resume-other-section">
-                        <label>Section Name:</label>
+              <div className="resume-accordion">
+                <div
+                  className="accordion-header"
+                  onClick={() => toggleSection("projects")}
+                >
+                  <h3>Projects</h3>
+                  {showSections.projects ? <FaChevronUp /> : <FaChevronDown />}
+                </div>
+                {showSections.projects && (
+                  <div className="resume-section-form">
+                    {resumeData.projects.map((project, index) => (
+                      <div key={index} className="resume-project-card">
+                        <button
+                          className="delete-btn"
+                          onClick={() => deleteItem("projects", index)}
+                        >
+                          🗑
+                        </button>
+                        <label>Project Name :</label>
+                        <input className="resume-input" value={project.name} />
+                        <label>Short Description :</label>
                         <input
                           className="resume-input"
-                          value={section.name}
-                          onChange={(e) => {
-                            const updatedSections = [
-                              ...resumeData.otherSections,
-                            ];
-                            updatedSections[index].name = e.target.value;
-                            setResumeData({
-                              ...resumeData,
-                              otherSections: updatedSections,
-                            });
-                          }}
+                          value={project.shortDescription}
                         />
-                        <button
-                          onClick={() => addSubsection(index)}
-                          className="add-btn"
-                        >
-                          + Add Subsection
-                        </button>
+                        <label>Description:</label>
+                        <textarea
+                          className="resume-textarea"
+                          value={project.description.join("\n")}
+                        />
+                        <label>Technologies:</label>
+                        <input
+                          className="resume-input"
+                          value={project.technologies.join(", ")}
+                        />
+                      </div>
+                    ))}
+                    <button onClick={addProject} className="add-btn">
+                      + Add Project
+                    </button>
+                  </div>
+                )}
+              </div>
 
-                        {section.subsections.map((sub, subIndex) => (
-                          <div key={subIndex} className="resume-subsection">
-                            <label>Subsection Name:</label>
-                            <input className="resume-input" value={sub.name} />
+              <button onClick={addOtherSection} className="add-btn">
+                + Add Other Section
+              </button>
+
+              {showOtherSections && (
+                <>
+                  <div className="resume-accordion">
+                    <div
+                      className="accordion-header"
+                      onClick={() => toggleSection("certifications")}
+                    >
+                      <h3>Certifications</h3>
+                      {showSections.certifications ? (
+                        <FaChevronUp />
+                      ) : (
+                        <FaChevronDown />
+                      )}
+                    </div>
+                    {showSections?.certifications && (
+                      <div className="resume-section-form">
+                        {resumeData.certifications.map((cert, index) => (
+                          <div
+                            key={index}
+                            className="resume-certification-card"
+                          >
+                            <button
+                              className="delete-btn"
+                              onClick={() => deleteItem("certification", index)}
+                            >
+                              🗑
+                            </button>
+                            <label>Certificate Name:</label>
+                            <input
+                              className="resume-input"
+                              value={cert.name}
+                              onChange={(e) =>
+                                updateCertification(
+                                  index,
+                                  "name",
+                                  e.target.value
+                                )
+                              }
+                            />
+
                             <label>Description:</label>
                             <textarea
                               className="resume-textarea"
-                              value={sub.description}
+                              value={cert.description}
+                              onChange={(e) =>
+                                updateCertification(
+                                  index,
+                                  "description",
+                                  e.target.value
+                                )
+                              }
+                            />
+
+                            <label>Certificate Link:</label>
+                            <input
+                              className="resume-input"
+                              value={cert.link}
+                              onChange={(e) =>
+                                updateCertification(
+                                  index,
+                                  "link",
+                                  e.target.value
+                                )
+                              }
                             />
                           </div>
                         ))}
+                        <button onClick={addCertification} className="add-btn">
+                          + Add Certification
+                        </button>
                       </div>
-                    ))}
-                  </>
-                )}
+                    )}
+                  </div>
 
-                <button className="resume-save-btn" onClick={handleSave}>
-                  Save
-                </button>
-              </div>
-            )}
+                  <div className="resume-accordion">
+                    <div
+                      className="accordion-header"
+                      onClick={() => toggleSection("certifications")}
+                    >
+                      <h3>Achievements</h3>
+                      {showSections.certifications ? (
+                        <FaChevronUp />
+                      ) : (
+                        <FaChevronDown />
+                      )}
+                    </div>
+                    {showSections?.certifications && (
+                      <div className="resume-section-form">
+                        {resumeData.achievements.map((ach, index) => (
+                          <div key={index} className="resume-achievement-card">
+                            <button
+                              className="delete-btn"
+                              onClick={() => deleteItem("achievements", index)}
+                            >
+                              🗑
+                            </button>
+                            <label>Achievement Name:</label>
+                            <input
+                              className="resume-input"
+                              value={ach.name}
+                              onChange={(e) =>
+                                updateAchievement(index, "name", e.target.value)
+                              }
+                            />
+
+                            <label>Description:</label>
+                            <textarea
+                              className="resume-textarea"
+                              value={ach.description}
+                              onChange={(e) =>
+                                updateAchievement(
+                                  index,
+                                  "description",
+                                  e.target.value
+                                )
+                              }
+                            />
+                          </div>
+                        ))}
+                        <button onClick={addAchievement} className="add-btn">
+                          + Add Achievement
+                        </button>
+                      </div>
+                    )}
+                  </div>
+
+                  <h3>Other Sections</h3>
+                  {resumeData?.otherSections?.map((section, index) => (
+                    <div key={index} className="resume-other-section">
+                      <label>Section Name:</label>
+                      <input
+                        className="resume-input"
+                        value={section.name}
+                        onChange={(e) => {
+                          const updatedSections = [...resumeData?.otherSections];
+                          updatedSections[index].name = e.target.value;
+                          setResumeData({
+                            ...resumeData,
+                            otherSections: updatedSections,
+                          });
+                        }}
+                      />
+                      <button
+                        onClick={() => addSubsection(index)}
+                        className="add-btn"
+                      >
+                        + Add Subsection
+                      </button>
+
+                      {section?.subsections?.map((sub, subIndex) => (
+                        <div key={subIndex} className="resume-subsection">
+                          <label>Subsection Name:</label>
+                          <input className="resume-input" value={sub.name} />
+                          <label>Description:</label>
+                          <textarea
+                            className="resume-textarea"
+                            value={sub.description}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  ))}
+                </>
+              )}
+
+              <button className="resume-save-btn" onClick={handleSave}>
+                Save
+              </button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };
