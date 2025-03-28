@@ -1,0 +1,45 @@
+.footer {
+  background: linear-gradient(135deg, #1e1e2e, #3a3a52, #202040);
+  color: white;
+  padding: 1.5rem 0;
+  text-align: center;
+  width: 100%;
+  margin-top: auto;
+}
+  
+  .footerContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  .footerTitle {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    color: #ff8a00; /* Matches the warm header color for contrast */
+  }
+  
+  .socialLinks {
+    display: flex;
+    justify-content: center;
+    gap: 1.2rem;
+    margin-top: 0.5rem;
+  }
+  
+  .socialIcon {
+    color: white;
+    transition: color 0.3s ease-in-out, transform 0.2s ease-in-out;
+  }
+  
+  .socialIcon:hover {
+    transform: scale(1.2);
+    color: #e52e71; /* Adds a hover effect matching the theme */
+  }
+  
+  .footerText {
+    font-size: 0.875rem;
+    opacity: 0.8;
+    margin-top: 1rem;
+  }
+  

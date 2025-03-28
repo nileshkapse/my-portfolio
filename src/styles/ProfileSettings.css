@@ -1,0 +1,193 @@
+/* 🌟 Scoped Profile Settings Styling 🌟 */
+.profile-settings-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    /* background: linear-gradient(135deg, #1e1e1e, #333); */
+    padding: 40px 20px;
+  }
+  
+  /* Profile Box */
+  .profile-settings-box {
+    background: rgba(255, 255, 255, 0.1);
+    padding: 30px;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+    border-top: 5px solid #ff8a00;
+    /* color: #fff; */
+  }
+  
+  /* Header */
+  .profile-settings-title {
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Form */
+  .profile-settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  /* Form Groups */
+  .profile-settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+  
+  .profile-settings-group label {
+    font-weight: 600;
+    color: #ff8a00;
+    font-size: 14px;
+  }
+  
+  /* Inputs & Textarea */
+  .profile-settings-input,
+  .profile-settings-textarea {
+    width: 100%;
+    padding: 12px;
+    /* border: none; */
+    border-radius: 6px;
+    font-size: 14px;
+    /* background: rgba(255, 255, 255, 0.2); */
+    /* color: #fff; */
+    transition: all 0.3s ease;
+  }
+  
+  .profile-settings-input:focus,
+  .profile-settings-textarea:focus {
+    outline: none;
+    background: rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Two-Column Layout */
+  .profile-settings-row {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .profile-settings-row .profile-settings-group {
+    flex: 1;
+  }
+  
+  /* Gradient Button */
+  .profile-settings-btn {
+    width: 100%;
+    padding: 12px;
+    background: #0723ff;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+  }
+  
+  .profile-settings-btn:hover {
+    transform: scale(1.03);
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .profile-settings-box {
+      max-width: 100%;
+      padding: 20px;
+    }
+  
+    .profile-settings-row {
+      flex-direction: column;
+    }
+    .profile-settings-input, .profile-settings-textarea{
+      width: 90%;
+    }
+  }
+  
+  /* Profile Picture Section */
+.profile-settings-picture-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.profile-settings-picture {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ff8a00;
+  box-shadow: 0 0 10px rgba(255, 138, 0, 0.5);
+}
+
+/* Edit Icon */
+.profile-settings-edit-icon {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  background: #ff8a00;
+  color: white;
+  border-radius: 50%;
+  padding: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Popup Modal */
+.profile-settings-popup {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  color: gold;
+  transform: translate(-50%, -50%);
+  background: #222;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  width: 320px;
+  text-align: center;
+}
+
+.profile-settings-popup input {
+  width: 100%;
+  padding: 10px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.profile-settings-popup-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.profile-settings-popup button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.profile-settings-save-btn {
+  background: #ff8a00;
+  color: white;
+}
+
+.profile-settings-cancel-btn {
+  background: gray;
+  /* color: white; */
+}

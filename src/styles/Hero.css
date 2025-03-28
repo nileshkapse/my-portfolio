@@ -1,7 +1,7 @@
 .hero {
     text-align: center;
     padding: 50px;
-    background: linear-gradient(135deg, #ff8a00, #e52e71);
+    /* background: linear-gradient(135deg, #ff8a00, #e52e71); */
     color: white;
     animation: fadeIn 1.5s ease-in-out;
   }
@@ -20,3 +20,62 @@
     from { opacity: 0; }
     to { opacity: 1; }
   }
+
+  /* Default Styling (For Desktop) */
+.hero {
+  text-align: center;
+  padding: 50px;
+  background: #171729;
+  color: white;
+  animation: fadeIn 1.5s ease-in-out;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  margin-top: 10px;
+}
+
+/* Tablet View (768px and below) */
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 20px;
+  }
+
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.3rem;
+  }
+}
+
+/* Mobile View (480px and below) */
+@media (max-width: 480px) {
+  .hero {
+    padding: 30px 15px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

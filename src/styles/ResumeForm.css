@@ -1,4 +1,4 @@
-/* Popup Background */
+/* 🌟 Popup Overlay */
 .resume-popup-overlay {
   position: fixed;
   top: 0;
@@ -12,29 +12,206 @@
   z-index: 999;
 }
 
+/* 🌟 Popup Content */
 /* Popup Content */
 .resume-popup-content {
-  background: white;
-  padding: 25px;
   position: relative;
-  border-radius: 12px;
+  background: white;
+  padding: 30px;
+  border-radius: 6px;
   width: 60%;
-  max-height: 80%;
+  max-width: 900px;
+  max-height: 74%;
   color: black;
-  overflow: auto;
-  max-width: 800px;
-  margin-top: 70px;
-  text-align: center;
+  overflow-y: auto;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   animation: popup-fade-in 0.3s ease-in-out;
+  margin-top: 68px; /* Only include this if necessary */
 }
 
+/* 🌟 Popup Header */
 .resume-popup-header {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
+  padding-bottom: 10px;
 }
 
+.resume-popup-header h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Close Button */
+.resume-close-btn {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(113, 113, 113, 0.722);
+  color: rgb(0, 0, 0);
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: all 0.3s ease-in-out;
+}
+
+.resume-close-btn:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.1);
+}
+
+.resume-close-btn:focus {
+  outline: none;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
+}
+
+/* 🌟 Labels */
+.resume-form label {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 6px;
+  display: block;
+  margin-bottom: 5px;
+  color: #444;
+}
+
+/* 🌟 Input Fields */
+.resume-input,
+.resume-textarea,
+.resume-select,
+.resume-datepicker {
+  width: 90%;
+  padding: 12px;
+  margin-top: 8px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background: #ffffff;
+  color: #333;
+  transition: all 0.3s ease-in-out;
+}
+
+/* 🌟 Focus & Hover Effects */
+.resume-input:focus,
+.resume-textarea:focus,
+.resume-select:focus,
+.resume-datepicker:focus {
+  outline: none;
+  border-color: #007bff;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* 🌟 Textarea Styling */
+.resume-textarea {
+  height: 100px;
+  resize: vertical;
+}
+
+/* 🌟 Date Picker Styling */
+.resume-datepicker {
+  background: #fff;
+  cursor: pointer;
+}
+
+/* 🌟 Buttons */
+.resume-btn,
+.resume-save-btn,
+.add-btn {
+  padding: 12px 18px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s ease-in-out;
+  width: 28%;
+  text-align: center;
+  font-weight: bold;
+}
+
+/* 🌟 Upload Button */
+.resume-btn {
+  background: linear-gradient(45deg, #007bff, #00c6ff);
+  color: white;
+  margin-top: 10px;
+}
+
+.resume-btn:hover {
+  background: linear-gradient(45deg, #0056b3, #0095d9);
+}
+
+/* 🌟 Save Button */
+.resume-save-btn {
+  background: linear-gradient(45deg, #28a745, #5cb85c);
+  color: white;
+}
+
+.resume-save-btn:hover {
+  background: linear-gradient(45deg, #218838, #3e8e41);
+}
+
+/* 🌟 Add Button */
+.add-btn {
+  background: linear-gradient(45deg, #ff9800, #ff5722);
+  color: white;
+  margin-top: 10px;
+}
+
+.add-btn:hover {
+  background: linear-gradient(45deg, #e65100, #d84315);
+}
+
+/* 🌟 Sections */
+.resume-skill-category,
+.resume-experience-card,
+.resume-project-card,
+.resume-education-card,
+.resume-certification-card,
+.resume-achievement-card {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* 🌟 Other Sections */
+.resume-other-section {
+  background: #eef1f5;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.resume-subsection {
+  padding-left: 15px;
+  border-left: 3px solid #007bff;
+  margin-top: 10px;
+}
+
+/* Popup Background */
+
+/* 🌟 Animation */
+@keyframes popup-fade-in {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Popup Animation */
 @keyframes popup-fade-in {
   from {
     transform: scale(0.8);
@@ -46,67 +223,305 @@
   }
 }
 
-/* Input Fields */
-.resume-popup-content input,
-.resume-popup-content textarea {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 16px;
+/* =============== Form Styling =============== */
+.resume-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
-.resume-popup-content textarea {
-  height: 80px;
-  resize: vertical;
+/* =============== Accordion Sections =============== */
+.resume-accordion {
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #f9f9f9;
+  overflow: hidden;
+  transition: all 0.3s ease-in-out;
 }
 
-/* Buttons */
-.resume-popup-content button {
-  padding: 10px 15px;
-  margin: 10px;
+/* =============== Buttons =============== */
+.add-btn,
+.resume-save-btn,
+.delete-btn {
+  padding: 10px 14px;
   border: none;
   border-radius: 6px;
   cursor: pointer;
   font-size: 16px;
-  background: linear-gradient(45deg, #007bff, #00c6ff);
-  color: white;
-  transition: 0.3s ease-in-out;
+  font-weight: 600;
+  transition: 0.3s;
+  margin-top: 10px;
 }
 
-.resume-popup-content button:hover {
+/* Add Button */
+.add-btn {
+  background: #28a745;
+  color: white;
+}
+
+.add-btn:hover {
+  background: #218838;
+}
+
+/* Delete Button */
+.delete-btn {
+  background: red;
+  color: white;
+  font-size: 14px;
+  padding: 6px 10px;
+  float: right;
+}
+
+.delete-btn:hover {
+  background: darkred;
+}
+
+/* Save Button */
+.resume-save-btn {
+  background: linear-gradient(45deg, #007bff, #00c6ff);
+  color: white;
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+}
+
+.resume-save-btn:hover {
   background: linear-gradient(45deg, #0056b3, #0095d9);
 }
 
-.resume-close-btn {
-  background: red;
-  position: absolute;
-  right: 0;
-  top: 0;
-}
-
-/* Section Headers */
-.resume-popup-content h2,
-.resume-popup-content h3 {
-  color: #333;
-  margin-bottom: 10px;
-}
-
-/* Skills */
-.resume-skill-category {
-  background: #f9f9f9;
-  padding: 10px;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-
-/* Experience & Projects */
+/* =============== Sections Cards (Projects, Experience, Certifications) =============== */
 .resume-experience-card,
-.resume-project-card {
-  background: #f5f5f5;
-  padding: 10px;
+.resume-project-card,
+.resume-certification-card {
+  background: #ffffff;
+  padding: 15px;
   border-radius: 8px;
-  margin-bottom: 10px;
+  margin-top: 10px;
+  border-left: 5px solid #007bff;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.resume-experience-card .delete-btn,
+.resume-project-card .delete-btn,
+.resume-certification-card .delete-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .resume-popup-content {
+    width: 90%;
+    padding: 20px;
+  }
+}
+.resume-section-form {
+  padding: 15px;
+  /* background-color: #d4d4d4; */
+}
+
+.accordion-header {
+  display: flex;
+  background: #007bff;
+  color: white;
+  padding: 12px;
+  justify-content: space-between;
+  cursor: pointer;
+  align-items: center;
+  font-size: 16px;
+  margin: 0;
+  border-radius: 8px 8px 0 0;
+  text-align: center;
+  height: 24px;
+}
+
+.accordion-header :hover {
+  background: #0056b3;
+}
+
+.upload-box {
+  width: 90%;
+  padding: 24px;
+  border: 3px dashed rgb(99 97 99 / 60%);
+  border-radius: 10px;
+  text-align: center;
+  margin-top: 35px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.upload-box:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: #000000a1;
+}
+
+/* Upload Icon */
+.upload-icon {
+  color: #ff8a00;
+  margin-bottom: 8px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.upload-box:hover .upload-icon {
+  transform: scale(1.1);
+}
+
+/* Upload Text */
+.upload-text {
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+/* Hide Default File Input */
+.resume-input-file {
+  display: none;
+}
+
+/* Upload Button */
+.upload-btn {
+  background: #ff8a00;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease-in-out, transform 0.2s ease;
+  width: 100%;
+  max-width: 200px;
+}
+
+.upload-btn:hover {
+  background: #0014ff;
+  transform: scale(1.05);
+}
+
+.upload-btn:disabled {
+  background: gray;
+  cursor: not-allowed;
+  transform: scale(1);
+}
+
+/* Resume Upload Container */
+.resume-upload-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  background: #fff;
+  border-radius: 12px;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.3);
+  color: #000;
+  position: relative; /* Required for absolute positioning of the close button */
+}
+
+/* Error Message */
+.error-message {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+/* 🌟 Responsive Popup Content */
+@media (max-width: 1024px) {
+  /* Tablets */
+  .resume-popup-content {
+    width: 80%;
+    max-width: 700px;
+    padding: 25px;
+  }
+
+  .resume-btn,
+  .resume-save-btn,
+  .add-btn {
+    width: 100%; /* Full width buttons for better accessibility */
+  }
+}
+
+@media (max-width: 768px) {
+  /* Mobile View */
+  .resume-popup-content {
+    width: 84%;
+    max-width: 600px;
+    padding: 20px;
+    max-height: 80%;
+  }
+
+  .resume-upload-container {
+    width: 80%;
+  }
+
+  .resume-popup-header h2 {
+    font-size: 18px; /* Reduce header size */
+  }
+
+  .resume-input,
+  .resume-textarea,
+  .resume-select,
+  .resume-datepicker {
+    width: 100%;
+    padding: 10px; /* Adjust input size */
+  }
+
+  .resume-textarea {
+    height: 80px; /* Reduce textarea height */
+  }
+
+  .resume-btn,
+  .resume-save-btn,
+  .add-btn {
+    width: 100%; /* Full width buttons */
+    padding: 10px;
+  }
+
+  /* Adjust Delete Button */
+  .delete-btn {
+    padding: 5px 8px;
+    font-size: 12px;
+  }
+}
+
+/* 🌟 Mobile View (Small Phones) */
+@media (max-width: 480px) {
+  .resume-popup-content {
+    width: 84%;
+    padding: 15px;
+  }
+
+  .resume-popup-header h2 {
+    font-size: 16px;
+  }
+
+  .resume-input,
+  .resume-textarea {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .resume-btn,
+  .resume-save-btn,
+  .add-btn {
+    font-size: 14px;
+    padding: 8px;
+  }
+
+  .upload-box {
+    width: 100%;
+    padding: 15px;
+  }
+
+  .upload-text {
+    font-size: 14px;
+  }
 }

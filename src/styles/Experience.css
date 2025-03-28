@@ -1,6 +1,6 @@
 .experience {
-  padding: 40px;
-  background: linear-gradient(135deg, #1e1e1e, #2d2d2d);
+  padding: 0 40px;
+  /* background: linear-gradient(135deg, #1e1e1e, #2d2d2d); */
   color: white;
   text-align: center;
   display: flex;
@@ -21,7 +21,7 @@
 }
 
 .company-logo {
-  width: 130px;
+  width: 40px;
   height: auto;
   display: block;
 }
@@ -79,6 +79,25 @@
   color: #ffcc00;
 }
 
+.description-list {
+  list-style: none; /* Remove default bullets */
+  padding-left: 0;
+}
+
+.description-item {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Space between icon and text */
+  margin-bottom: 5px; /* Ensure spacing between points */
+}
+
+.bullet-icon {
+  flex-shrink: 0; /* Prevent icon from resizing */
+  width: 14px; /* Set fixed width */
+  height: 14px; /* Set fixed height */
+  color: #4caf50; /* Set desired color */
+}
+
 @keyframes fadeInUp {
   from {
     opacity: 0;
@@ -87,5 +106,62 @@
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@media (max-width: 1024px) {
+  .experience {
+    padding: 30px;
+  }
+
+  .experience-card {
+    width: 90%;
+  }
+
+  .position-card h4 {
+    font-size: 1.1rem;
+  }
+
+  .experience-location,
+  .experience-total {
+    font-size: 0.95rem;
+  }
+
+  .position-card li {
+    padding: 6px;
+  }
+}
+
+/* Mobile View */
+@media (max-width: 768px) {
+  .experience {
+    padding: 20px;
+  }
+
+  .experience-card {
+    width: 95%;
+    padding: 15px;
+  }
+
+  .position-card {
+    padding: 10px;
+  }
+
+  .position-card h4 {
+    font-size: 1rem;
+  }
+
+  .experience-location,
+  .experience-total {
+    font-size: 0.9rem;
+  }
+
+  .position-card li {
+    padding: 5px;
+    font-size: 0.9rem;
+  }
+
+  .company-logo {
+    width: 35px;
   }
 }

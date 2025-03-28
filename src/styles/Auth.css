@@ -1,0 +1,176 @@
+/* Gradient Background */
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: #fff;
+}
+
+/* Auth Box */
+.auth-box {
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  width: 320px;
+  margin-top: 32px;
+  color: rgb(0, 0, 0);
+  transition: transform 0.2s;
+  font-family: "dm-sans-regular",sans-serif;
+}
+
+/* Shake Animation */
+.shake {
+  animation: shake 0.3s ease-in-out;
+}
+
+.onboarding-beta {
+  margin-top: -10px;
+  margin-bottom: 20px;
+  background: url(../../public/quick-sign-up.png) 50% 50% / auto 120px no-repeat;
+  height: 120px;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+/* Input Fields */
+.auth-input {
+  width: 90%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgb(0, 0, 0);
+  font-size: 16px;
+  outline: none;
+  transition: 0.3s;
+}
+
+.auth-input::placeholder {
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.auth-input:focus {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid #ff8a00;
+}
+
+/* Submit Button */
+.auth-button {
+  width: 50%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #e52e71, #ff8a00);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.auth-button:hover {
+  background: linear-gradient(135deg, #e52e71, #ff8a00);
+  transform: scale(1.05);
+}
+
+/* Error Message */
+.error-message {
+  color: #ff4d4d;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: rgba(255, 0, 0, 0.1);
+  padding: 8px;
+  border-radius: 6px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Success Message */
+.success-message {
+  color: #4caf50;
+  font-weight: bold;
+  margin-bottom: 10px;
+  background: rgba(0, 255, 0, 0.1);
+  padding: 8px;
+  border-radius: 6px;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Signup/Login Text */
+.signup-text {
+  margin-top: 12px;
+}
+
+/* Signup/Login Link */
+.signup-link {
+  color: #0056b2;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+
+.signup-link:hover {
+  text-decoration: underline;
+  color: #e52e71;
+}
+
+/* Fade In Animation */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Design for Mobile */
+@media (max-width: 480px) {
+  /* Adjust Auth Container for Mobile */
+  .auth-container {
+    height: 100vh;
+    padding: 10px;
+  }
+
+  /* Adjust Auth Box for Mobile */
+  .auth-box {
+    width: 80%;
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Adjust Input Fields */
+  .auth-input {
+    width: 90%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Adjust Button for Mobile */
+  .auth-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  /* Adjust Error/Success Messages */
+  .error-message, 
+  .success-message {
+    font-size: 14px;
+    padding: 6px;
+  }
+
+  /* Signup/Login Text */
+  .signup-text {
+    font-size: 14px;
+  }
+
+  /* Adjust Spacing for Better Mobile Experience */
+  .signup-link {
+    font-size: 14px;
+  }
+}
