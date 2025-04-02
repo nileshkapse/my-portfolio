@@ -134,6 +134,7 @@
     flex-direction: column;
     text-align: center;
     padding: 25px;
+    overflow: auto;
   }
 
   .profile-pic {
@@ -144,6 +145,7 @@
 
   .about-content {
     text-align: center;
+    width: 100%;
   }
 
   .about h2 {
@@ -157,6 +159,8 @@
   .about-description {
     font-size: 0.95rem;
     padding: 0 15px;
+    text-align: justify;
+    overflow-wrap: break-word;
   }
 }
 

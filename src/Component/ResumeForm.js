@@ -12,7 +12,7 @@ const ResumeForm = () => {
   const [user, setUser] = useState(userData);
   const [resumeData, setResumeData] = useState(null);
   const [file, setFile] = useState(null);
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(userData?.username);
   const [profilelink, setProfileLink] = useState("");
   const [showPopup, setShowPopup] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
@@ -77,8 +77,9 @@ const ResumeForm = () => {
       const result = await response.json();
 
       if (result.success) {
+
         setResumeData(result.data);
-        setShowPopup(false)
+        setShowPopup(false);
       } else {
         setErrorMessage(
           "Failed to parse resume. Please enter details manually."
@@ -92,7 +93,6 @@ const ResumeForm = () => {
           projects: [],
           achievements: [],
           otherSections: [], // Ensure this exists
-          
         });
       }
     } catch (error) {
@@ -101,13 +101,14 @@ const ResumeForm = () => {
   };
 
   const handleSave = async () => {
+    let Username = userData.username;
     try {
       const response = await fetch(
         `${process.env.REACT_APP_API_URL}/save-resume`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username, ...resumeData }),
+          body: JSON.stringify({ Username,'newUsername':username, ...resumeData }),
         }
       );
 
@@ -285,7 +286,7 @@ const ResumeForm = () => {
 
         {resumeData && (
           <div className="resume-popup-content">
-             <button
+            <button
               className="resume-close-btn"
               onClick={() => {
                 setShowPopup(false);
@@ -300,6 +301,7 @@ const ResumeForm = () => {
                 <input
                   className="resume-input"
                   value={username}
+                  
                   onChange={(e) => {
                     setUsername(e.target.value);
                     checkUsername(e.target.value);
@@ -917,7 +919,9 @@ const ResumeForm = () => {
                         className="resume-input"
                         value={section.name}
                         onChange={(e) => {
-                          const updatedSections = [...resumeData?.otherSections];
+                          const updatedSections = [
+                            ...resumeData?.otherSections,
+                          ];
                           updatedSections[index].name = e.target.value;
                           setResumeData({
                             ...resumeData,

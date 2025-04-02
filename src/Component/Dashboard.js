@@ -109,7 +109,7 @@ const Dashboard = () => {
                 if (userData.user.resume) {
                   navigate("/resume-preview", {
                     state: {
-                      resumeUrl: `${process.env.REACT_APP_API_URL}${userData.user.resume}`,
+                      resumeUrl: `${process.env.REACT_APP_API_URL}/${userData.user.resume}`,
                     },
                   });
                 } else {
