@@ -27,6 +27,8 @@ const ResumeForm = () => {
     otherSections: false,
     profile: false,
   });
+  const [isEditing, setIsEditing] = useState(username === ""); // Allow typing if username is empty
+
 
   const navigate = useNavigate();
 
@@ -108,7 +110,7 @@ const ResumeForm = () => {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ Username,'newUsername':username, ...resumeData }),
+          body: JSON.stringify({ Username, 'newUsername': username, ...resumeData }),
         }
       );
 
@@ -298,15 +300,22 @@ const ResumeForm = () => {
             <div className="resume-form">
               <div className="resume-form-section">
                 <label>Username:</label>
-                <input
-                  className="resume-input"
-                  value={username}
-                  
-                  onChange={(e) => {
-                    setUsername(e.target.value);
-                    checkUsername(e.target.value);
-                  }}
-                />
+                <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
+                  <input
+                    className="resume-input"
+                    value={username}
+                    disabled={!isEditing}
+                    onChange={(e) => {
+                      setUsername(e.target.value);
+                      checkUsername(e.target.value);
+                    }}
+                  />
+                  {username && !isEditing ? (
+                    <button className="changebutton" onClick={() => setIsEditing(true)}>Change Username</button>
+                  ) : (
+                    isEditing && <button className="changebutton" onClick={() => setIsEditing(false)}>Save</button>
+                  )}
+                </div>
                 {error && <p style={{ color: "red" }}>{error}</p>}
                 {availability !== null && (
                   <p style={{ color: availability ? "green" : "red" }}>
@@ -808,7 +817,7 @@ const ResumeForm = () => {
                           >
                             <button
                               className="delete-btn"
-                              onClick={() => deleteItem("certification", index)}
+                              onClick={() => deleteItem("certifications", index)}
                             >
                               🗑
                             </button>

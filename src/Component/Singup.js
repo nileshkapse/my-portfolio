@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const checkUsername = async (username) => {
   const response = await fetch(
@@ -18,6 +19,12 @@ const Signup = () => {
   const navigate = useNavigate();
   const [availability, setAvailability] = useState(null);
   const [debouncedUsername, setDebouncedUsername] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const passwordsMatch = user.password === confirmPassword;
+
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -80,9 +87,10 @@ const Signup = () => {
       <div
         className="logo-container"
         data-theme="light"
+        onClick={() => navigate("/")}
       >
-        <span className="logo-text">
-          <img src="/Instant.ico" style={{ height: 30 }} alt=""/>
+        <span className="logo-text" >
+          <img src="/Instant.ico" style={{ height: 30 }} alt="" />
           <span className="instant">Instant</span>
           <span className="portfolio" style={{ color: "black" }}>
             Portfolio
@@ -127,13 +135,48 @@ const Signup = () => {
             required
             onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
-          <input
-            type="password"
-            className="auth-input"
-            placeholder="Password"
-            required
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              className="auth-input"
+              placeholder="Password"
+              required
+              onChange={(e) => setUser({ ...user, password: e.target.value })}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash/> : <FaEye/>}
+            </button>
+          </div>
+          <div className="password-container">
+            <input
+              type={showConfirmPassword ? "text" : "password"}
+              className={`auth-input ${passwordsMatch ? "valid" : "invalid"}`}
+              placeholder="Confirm Password"
+              required
+              onChange={(e) => setConfirmPassword(e.target.value)}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+            >
+              {showConfirmPassword ?<FaEyeSlash/> : <FaEye/>}
+            </button>
+          </div>
+
+          {/* Password Match Message */}
+          {!passwordsMatch && confirmPassword && (
+            <p className="error-message">❌ Passwords do not match</p>
+          )}
+
+          {passwordsMatch && confirmPassword && (
+            <p className="success-message">✅ Passwords match</p>
+          )}
+
           <button type="submit" className="auth-button">
             Signup
           </button>

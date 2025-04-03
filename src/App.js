@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import Header from "./Component/Header";
-import Hero from "./Component/Hero";
-import About from "./Component/About";
-import Skills from "./Component/Skills";
-import Experience from "./Component/Experience";
-import Contact from "./Component/Contact";
-import Projects from "./Component/Projects";
-import Resume from "./Component/Resume";
-import {
-  FaArrowUp,
-  FaRobot,
-  FaWindowClose,
-  FaWindowMinimize,
-} from "react-icons/fa";
-import ResumeForm from "./Component/ResumeForm";
-import { Navigate, Route, Router, Routes, useParams } from "react-router-dom";
-import Login from "./Component/Login";
-import Signup from "./Component/Singup";
-import ProtectedRoute from "./Component/ProtectedRoute";
-import Dashboard from "./Component/Dashboard";
-import ProfileSettings from "./Component/ProfileSettings";
-import MySkillAndResume from "./Component/MySkillAndResume";
-import ResumePreview from "./Component/ResumePreview";
-import UserProfile from "./Component/UserProfile";
-import { useAuth } from "./context/AuthContext";
+import React, { useState, useEffect, Suspense, lazy } from "react";
+
 import MainPage from "./Component/MainPage";
+import ErrorBoundary from "./Component/ErrorBoundary";
+
+import "./App.css";
+import { Navigate, Route, Router, Routes, useParams } from "react-router-dom";
+
+import { useAuth } from "./context/AuthContext";
+
+const ResumeForm = lazy(() => import("./Component/ResumeForm"));
+const Login = lazy(() => import("./Component/Login"));
+const Signup = lazy(() => import("./Component/Singup"));
+const ProtectedRoute = lazy(() => import("./Component/ProtectedRoute"));
+const Dashboard = lazy(() => import("./Component/Dashboard"));
+const ProfileSettings = lazy(() => import("./Component/ProfileSettings"));
+const ResumePreview = lazy(() => import("./Component/ResumePreview"));
+const UserProfile = lazy(() => import("./Component/UserProfile"));
+
 
 function App() {
   const { username } = useParams(); // Get username from URL
@@ -54,7 +45,7 @@ function App() {
   };
 
   return (
-    <Routes>
+    <ErrorBoundary> <Routes>
       <Route
         path="/login"
         element={user ? <Navigate to="/dashboard" /> : <Login />}
@@ -77,7 +68,8 @@ function App() {
         <Route path="resume-preview" element={<ResumePreview />} />
         <Route path="profile-settings" element={<ProfileSettings />} />
       </Route>
-    </Routes>
+    </Routes></ErrorBoundary>
+
   );
 }
 

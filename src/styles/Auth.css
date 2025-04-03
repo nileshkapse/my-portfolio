@@ -18,7 +18,7 @@
   margin-top: 32px;
   color: rgb(0, 0, 0);
   transition: transform 0.2s;
-  font-family: "dm-sans-regular",sans-serif;
+  font-family: "dm-sans-regular", sans-serif;
 }
 
 /* Shake Animation */
@@ -34,10 +34,23 @@
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  25% {
+    transform: translateX(-5px);
+  }
+
+  50% {
+    transform: translateX(5px);
+  }
+
+  75% {
+    transform: translateX(-5px);
+  }
 }
 
 /* Input Fields */
@@ -74,7 +87,65 @@
   font-weight: bold;
   cursor: pointer;
   transition: 0.3s ease-in-out;
+  margin-bottom: 10px;
 }
+
+.password-container {
+  position: relative;
+  align-items: center;
+}
+
+.password-container {
+  position: relative;
+  align-items: center;
+}
+
+.auth-input {
+  padding-right: 40px;
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.valid {
+  border: 2px solid green;
+}
+
+.invalid {
+  border: 2px solid red;
+}
+
+.error-message {
+  color: red;
+  font-size: 14px;
+}
+
+.success-message {
+  color: green;
+  font-size: 14px;
+}
+
+
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 18px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 18px;
+}
+
 
 .auth-button:hover {
   background: linear-gradient(135deg, #e52e71, #ff8a00);
@@ -123,12 +194,20 @@
 
 /* Fade In Animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Responsive Design for Mobile */
 @media (max-width: 480px) {
+
   /* Adjust Auth Container for Mobile */
   .auth-container {
     height: 100vh;
@@ -158,7 +237,7 @@
   }
 
   /* Adjust Error/Success Messages */
-  .error-message, 
+  .error-message,
   .success-message {
     font-size: 14px;
     padding: 6px;

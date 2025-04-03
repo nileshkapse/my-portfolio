@@ -1,13 +1,17 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext"; // Import AuthContext
 import "../styles/Auth.css"; // Import CSS
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: "", password: "" });
   const [error, setError] = useState(null);
   const navigate = useNavigate();
   const { login } = useAuth(); // Use the login function from AuthContext
+  const [showPassword, setShowPassword] = useState(false);
+  
+
 
   const handleChange = (e) => {
     setCredentials((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -39,8 +43,8 @@ const Login = () => {
 
   return (
     <div className="auth-container">
-      <div className="logo-container" data-theme="light">
-        <span className="logo-text">
+      <div className="logo-container" data-theme="light" onClick={() => navigate("/")}>
+        <span className="logo-text" >
           <img src="/Instant.ico" alt="" style={{ height: 30 }} />
           <span className="instant">Instant</span>
           <span className="portfolio" style={{ color: "black" }}>Portfolio</span>
@@ -61,15 +65,24 @@ const Login = () => {
             value={credentials.email}
             onChange={handleChange}
           />
-          <input
-            type="password"
-            name="password"
-            className="auth-input"
-            placeholder="Password"
-            required
-            value={credentials.password}
-            onChange={handleChange}
-          />
+          <div className="password-container">
+            <input
+              type={showPassword ? "text" : "password"}
+              name="password"
+              className="auth-input"
+              placeholder="Password"
+              required
+              value={credentials.password}
+              onChange={handleChange}
+            />
+            <button
+              type="button"
+              className="toggle-password"
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </button>
+          </div>
           <button type="submit" className="auth-button">Login</button>
         </form>
 

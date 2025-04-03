@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import { FaEdit } from "react-icons/fa";
+import { FaEdit, FaUserCircle } from "react-icons/fa";
 import "../styles/ProfileSettings.css";
 
 const ProfileSettings = () => {
@@ -60,11 +60,16 @@ const ProfileSettings = () => {
 
         {/* Profile Picture Section */}
         <div className="profile-settings-picture-container">
-          <img
-            src={user.profile_link || "https://via.placeholder.com/120"}
-            alt="Profile"
-            className="profile-settings-picture"
-          />
+          {user.profile_link ? (
+            <img
+              src={user.profile_link}
+              alt="Profile"
+              className="profile-settings-picture"
+              onError={(e) => (e.target.style.display = "none")}
+            />
+          ) : (
+            <FaUserCircle className="profile-icon" size={120} />
+          )}
           <div
             className="profile-settings-edit-icon"
             onClick={() => setShowPopup(true)}
@@ -77,7 +82,7 @@ const ProfileSettings = () => {
           <div className="profile-settings-group">
             <label>Username</label>
             <input
-              className="profile-settings-input"
+              className="profile-settings-input disable"
               type="text"
               name="username"
               value={user.username}
@@ -99,7 +104,7 @@ const ProfileSettings = () => {
           <div className="profile-settings-group">
             <label>Email</label>
             <input
-              className="profile-settings-input"
+              className="profile-settings-input disable"
               type="email"
               name="email"
               value={user.email}

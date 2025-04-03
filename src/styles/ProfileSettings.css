@@ -51,7 +51,7 @@
   /* Inputs & Textarea */
   .profile-settings-input,
   .profile-settings-textarea {
-    width: 100%;
+    width: 90%;
     padding: 12px;
     /* border: none; */
     border-radius: 6px;
@@ -79,16 +79,41 @@
   
   /* Gradient Button */
   .profile-settings-btn {
-    width: 100%;
+    width: max-content;
+    align-items: center;
     padding: 12px;
     background: #0723ff;
     color: #ffffff;
     font-size: 16px;
     font-weight: bold;
+    margin: auto;
     border: none;
     border-radius: 6px;
     cursor: pointer;
     transition: 0.3s ease-in-out;
+  }
+  .resume-close-btn {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: rgba(113, 113, 113, 0.722);
+    color: rgb(0, 0, 0);
+    font-size: 18px;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .disable{
+    background: #63636369;
+    color: white;
   }
   
   .profile-settings-btn:hover {

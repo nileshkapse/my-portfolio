@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "../styles/Header.css";
 import { FaMoon, FaSun } from "react-icons/fa";
+import { Navigate, redirect, useNavigate } from "react-router-dom";
 
 const Header = (props) => {
   const [activeSection, setActiveSection] = useState("home");
   const [scrolled, setScrolled] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
@@ -43,7 +45,7 @@ const Header = (props) => {
 
   return (
     <header className={`header ${scrolled ? "scrolled" : ""}`}>
-      <div className="logo" data-theme="light">
+      <div className="logo" data-theme="light" onClick={() => navigate("/")}>
         <span className="logo-text">
           <span className="instant">Instant</span>
           <span className={`portfolio ${scrolled ? "scrolled" : ""}`}>

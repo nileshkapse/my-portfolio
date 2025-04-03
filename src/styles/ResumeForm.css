@@ -73,6 +73,19 @@
   box-shadow: 0 0 8px rgba(255, 255, 255, 0.6);
 }
 
+.changebutton{
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #e52e71, #ff8a00);
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  width: max-content;
+  transition: 0.3s ease-in-out;
+}
+
 /* 🌟 Labels */
 .resume-form label {
   font-size: 16px;
@@ -88,7 +101,7 @@
 .resume-textarea,
 .resume-select,
 .resume-datepicker {
-  width: 90%;
+  width: 97%;
   padding: 12px;
   margin-top: 8px;
   border: 1px solid #ccc;
