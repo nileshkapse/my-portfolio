@@ -32,7 +32,7 @@ const MainPage = () => {
         <h1 className="heroTitle">Instant Resume to Portfolio</h1>
         <span className="heroText" loading="lazy">
           Upload your resume, fill in details, and get your portfolio live
-          instantly.
+          instantly.Nilesh
         </span>
         <button className="ctaButton" onClick={handleGetStarted}>
           Get Started for Free
